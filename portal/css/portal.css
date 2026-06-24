@@ -1,0 +1,11 @@
+/* Portal shared styles placeholder */
+:root {
+  font-family: Arial, sans-serif;
+  color: #222;
+  background: #f4f6f9;
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}

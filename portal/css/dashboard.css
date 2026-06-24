@@ -1,0 +1,12 @@
+/* Dashboard and portal layout styles placeholder */
+.dashboard-page,
+.profile-page,
+.notifications-page,
+.projects-page,
+.files-page,
+.invoices-page,
+.analytics-overview-page,
+.traffic-page,
+.uptime-page {
+  padding: 2rem;
+}

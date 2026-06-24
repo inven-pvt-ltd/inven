@@ -1,0 +1,9 @@
+/* Form styles placeholder */
+.auth-page,
+.revision-request-page,
+.new-ticket-page,
+.uploads-page {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}

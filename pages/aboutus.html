@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about INVEN, a premium web development and server infrastructure company building secure, scalable, and high-performance digital solutions for businesses.">
+    <meta name="keywords" content="About INVEN, web development company, server infrastructure, website design, cloud solutions, server management, development team">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://inven.dev/pages/aboutus.html">
+    <meta property="og:title" content="About INVEN">
+    <meta property="og:description" content="Meet the team behind INVEN and discover our mission to build premium websites and scalable infrastructure.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inven.dev/pages/aboutus.html">
+    <title>About INVEN | Premium Web Development & Server Infrastructure</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-pap2uAqU1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* About Us Page Specific Styles */
+        .who-we-are-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .who-we-are-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .who-we-are-images img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+        @media (max-width: 768px) {
+            .who-we-are-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        body {
+            background: #0a0c10;
+        }
+        .about-hero {
+            position: relative;
+        }
+        .about-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0,255,204,0.05), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-text h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            max-width: 42rem;
+            color: #b8c5d6;
+        }
+        .about-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 10% 80px;
+        }
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+        .hero-text {
+            flex: 1;
+        }
+        .hero-image {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 520px;
+        }
+        .hero-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            animation: floatY 5s ease-in-out infinite;
+        }
+        .about-section,
+        .core-values-section,
+        .by-the-numbers-section {
+            padding: 90px 10%;
+        }
+        .about-section {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .about-section p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #c9d3df;
+        }
+        .about-section h2,
+        .core-values-section h2,
+        .by-the-numbers-section h2 {
+            font-size: 2.6rem;
+            margin-bottom: 1.25rem;
+        }
+        .core-value-card,
+        .number-card {
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0,255,204,0.12);
+        }
+        /* (removed duplicate .hero-image img rule) */
+        @keyframes floatY {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes ambientBackground {
+            0% {
+                background-position: 0% 0%, 100% 0%, 50% 100%;
+            }
+            50% {
+                background-position: 20% 10%, 80% 20%, 45% 80%;
+            }
+            100% {
+                background-position: 10% 30%, 90% 10%, 55% 90%;
+            }
+        }
+        .core-values-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        .numbers-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        .core-value-card {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            align-items: start;
+            gap: 2rem;
+            background: rgba(20,25,40,0.85);
+            border: 1px solid rgba(0,255,204,0.08);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .number-card {
+            background: rgba(20, 25, 40, 0.85);
+            border-radius: 1.2rem;
+            padding: 2.2rem 1.5rem 1.5rem;
+            border: 1px solid rgba(0,255,204,0.07);
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.08);
+            transition: transform 0.2s cubic-bezier(.4,2,.3,1), box-shadow 0.2s;
+            text-align: center;
+        }
+        .core-value-card:hover,
+        .number-card:hover {
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 0 4px 36px 0 rgba(0,255,204,0.16);
+        }
+        .core-value-card i,
+        .number-card .number i {
+            font-size: 2.2rem;
+            color: #00ffd0;
+            margin-bottom: 0.7rem;
+        }
+        .number-card .number,
+        .core-values-section h2,
+        .by-the-numbers-section h2,
+        .about-section h2,
+        .about-section.commitment-section h2 {
+            text-align: center;
+        }
+        .number-card .desc,
+        .about-section.commitment-section p {
+            text-align: center;
+        }
+        .member-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: flex-start;
+            text-align: left;
+            align-self: start;
+            padding-top: 0.25rem;
+        }
+
+        .member-info h3 {
+            margin: 0;
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+
+        .member-info h4 {
+            margin: 0;
+            color: #00ffd0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        .member-info p {
+            margin: 0;
+            text-align: left;
+            margin-top: 0;
+            line-height: 1.9;
+            color: #e6eef8;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+        .number-card .number {
+            display: block;
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: #00ffd0;
+            margin-bottom: 0.6rem;
+        }
+        .number-card .desc {
+            color: #c7f5f5;
+            font-size: 1.06rem;
+        }
+        .cta-button {
+            background: linear-gradient(90deg, #00ffd0 0%, #0099ff 100%);
+            color: #171e2b;
+            border: none;
+            border-radius: 999px;
+            padding: 0.85em 2.2em;
+            font-size: 1.14rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 2.2rem auto 0;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.10);
+            transition: transform 0.18s cubic-bezier(.4,2,.3,1), box-shadow 0.18s;
+        }
+        .cta-button:hover,
+        .cta-button:focus {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 6px 28px 0 rgba(0,255,204,0.20);
+            color: #0a0d13;
+        }
+        @media (max-width: 768px) {
+            .about-hero {
+                padding: 90px 6% 50px;
+            }
+            .hero-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 2.2rem;
+                text-align: center;
+            }
+            .hero-image {
+                max-width: 100%;
+            }
+            .hero-image img {
+                height: 140px;
+            }
+            .about-section,
+            .core-values-section,
+            .by-the-numbers-section {
+                padding: 60px 5%;
+            }
+        }
+        .core-value-card img {
+            width: 100% !important;
+            max-width: 260px;
+            height: 320px !important;
+            object-fit: cover;
+            border-radius: 18px !important;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px){
+          .core-values-cards{max-width:100%;}
+          .core-value-card{grid-template-columns:1fr;text-align:center;}
+        }
+
+        .core-value-card:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .core-value-card h3 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .core-value-card h4 {
+            color: #00ffd0;
+            margin: -0.3rem 0 0.5rem;
+            font-size: 1.05rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .core-value-card p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #c8d2df;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar fixed-navbar">
+        <div class="navbar-container">
+            <a href="../index.html" class="navbar-logo">INVEN<span class="dot">.</span></a>
+            <ul class="navbar-links">
+                <li><a href="../index.html"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="aboutus.html" class="active"><i class="fa fa-users"></i> About Us</a></li>
+                <li><a href="contact.html"><i class="fa fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero about-hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>About INVEN</h1>
+                <p class="subtitle">Premium web development and robust server infrastructure, built for reliability, scalability, and modern digital needs.</p>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop" alt="Placeholder 1">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop" alt="Placeholder 2">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop" alt="Placeholder 3">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop" alt="Placeholder 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Are -->
+    <section class="about-section">
+        <h2>Who We Are</h2>
+        <div class="who-we-are-layout">
+          <div class="who-we-are-images">
+            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=900&auto=format&fit=crop" alt="Office">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop" alt="Team">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&auto=format&fit=crop" alt="Servers">
+            <img src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?w=900&auto=format&fit=crop" alt="Workspace">
+          </div>
+          <div>
+            <p>INVEN creates premium websites and scalable server infrastructure engineered for speed, security, and reliability. We help businesses establish a modern digital presence while ensuring their backend systems are ready to grow.</p>
+            <p>Our team combines design, development, cloud technologies, and performance optimization to deliver solutions that look exceptional and operate flawlessly. We focus on long-term partnerships and building technology that drives measurable business success.</p>
+          </div>
+        </div>
+    </section>
+
+
+    <!-- Our Team -->
+    <section class="core-values-section">
+        <h2>Meet Our Team</h2>
+        <div class="core-values-cards">
+            <div class="core-value-card">
+                <img src="https://picsum.photos/300?random=41" alt="Founder" style="width:220px;height:300px;border-radius:20px;object-fit:cover;margin-bottom:1rem;">
+                <div class="member-info">
+                    <h3>Om Mate</h3>
+                    <h4>Founding Partner</h4>
+                    <p>Co-founded INVEN with a vision to create premium digital experiences, high-performance websites, and scalable server infrastructure that empower businesses to grow.</p>
+                </div>
+            </div>
+            <div class="core-value-card">
+                <img src="https://picsum.photos/300?random=42" alt="Co-Founder" style="width:220px;height:300px;border-radius:20px;object-fit:cover;margin-bottom:1rem;">
+                <div class="member-info">
+                    <h3>Soham Memon</h3>
+                    <h4>Founding Partner</h4>
+                    <p>Co-founded INVEN with a focus on innovation, collaboration, and building reliable technology solutions backed by long-term client relationships and operational excellence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Commitment -->
+    <section class="about-section commitment-section">
+        <h2>Our Commitment</h2>
+        <p>
+            At INVEN, we're committed to delivering exceptional results and forging enduring partnerships. Ready to take your project to the next level?
+        </p>
+        <a href="contact.html" class="cta-button">Contact Us</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>INVEN</h3>
+                <p>Building premium websites, scalable server infrastructure, and high-performance digital experiences for businesses worldwide.</p>
+                <p><strong>Fast. Secure. Reliable. Built for growth.</strong></p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-services">
+                <h4>Core Services</h4>
+                <ul>
+                    <li>Custom Website Development</li>
+                    <li>UI/UX Design</li>
+                    <li>Cloud &amp; VPS Deployment</li>
+                    <li>Server Creation &amp; Management</li>
+                    <li>Performance Optimization</li>
+                    <li>Maintenance &amp; Support</li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>Email: contact@inven.dev</p>
+                <p>Response Time: Within 24 Hours</p>
+                <p>Serving clients globally.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 INVEN. All rights reserved.</p>
+            <p>Designed to deliver premium digital experiences.</p>
+        </div>
+    </footer>
+    <script src="../script.js"></script>
+</body>
+</html>
