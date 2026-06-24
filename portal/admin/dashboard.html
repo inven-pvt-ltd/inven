@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: rgba(24, 26, 32, 0.95);
+            --glass: rgba(36, 39, 48, 0.75);
+            --glass-light: rgba(36, 39, 48, 0.55);
+            --primary: #6c63ff;
+            --accent: #37d67a;
+            --danger: #f44336;
+            --warning: #ffb300;
+            --text: #f8f8ff;
+            --muted: #a0a4b8;
+            --sidebar-width: 220px;
+            --sidebar-collapsed: 64px;
+            --transition: 0.25s cubic-bezier(.4,0,.2,1);
+            --radius: 24px;
+            --shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--glass);
+            backdrop-filter: blur(24px);
+            box-shadow: var(--shadow);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 100;
+        }
+        .sidebar .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin: 0 0 32px 32px;
+        }
+        .sidebar nav {
+            flex: 1;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 32px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 12px 0 0 12px;
+            transition: background var(--transition), color var(--transition);
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+            color: var(--text);
+        }
+        .sidebar a .icon {
+            margin-right: 16px;
+            font-size: 1.2em;
+            width: 22px;
+            text-align: center;
+        }
+        .sidebar .settings {
+            margin-top: auto;
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: transparent;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 32px 0 32px;
+        }
+        .header-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .dashboard-wrapper {
+            display: flex;
+            flex: 1;
+            padding: 24px 32px 32px 32px;
+            gap: 32px;
+            min-height: 0;
+        }
+        .dashboard-main {
+            flex: 2.5;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            min-width: 0;
+        }
+        .kpi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 24px;
+        }
+        .kpi-card {
+            background: var(--glass-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 0;
+            cursor: pointer;
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .kpi-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 36px 0 rgba(0,0,0,0.22);
+        }
+        .kpi-title {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .kpi-value {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .kpi-trend {
+            font-size: 0.95rem;
+            color: var(--accent);
+        }
+        .kpi-card.kpi-danger .kpi-trend {
+            color: var(--danger);
+        }
+        .dashboard-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+        .activity-timeline, .quick-actions {
+            flex: 1;
+            min-width: 260px;
+            background: var(--glass-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        .activity-timeline {
+            max-width: 420px;
+        }
+        .timeline-title, .quick-actions-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin-right: 16px;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-desc {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        .timeline-time {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .quick-actions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .quick-action-btn {
+            flex: 1 1 45%;
+            background: linear-gradient(135deg, var(--primary) 60%, var(--accent) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s;
+            box-shadow: 0 2px 12px 0 rgba(108,99,255,0.15);
+        }
+        .quick-action-btn:hover {
+            background: linear-gradient(135deg, var(--accent) 40%, var(--primary) 100%);
+        }
+        .dashboard-table-card {
+            background: var(--glass-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-top: 0;
+        }
+        .table-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text);
+            font-size: 0.98rem;
+        }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+        }
+        th {
+            color: var(--muted);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        tr:not(:last-child) td {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .progress-bar-bg {
+            background: rgba(255,255,255,0.07);
+            border-radius: 8px;
+            height: 10px;
+            width: 100%;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 10px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+            transition: width 0.4s;
+        }
+        .status {
+            display: inline-block;
+            border-radius: 8px;
+            padding: 4px 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+        .status.active { background: rgba(55,214,122,0.18); color: var(--accent);}
+        .status.paused { background: rgba(255,179,0,0.18); color: var(--warning);}
+        .status.completed { background: rgba(108,99,255,0.18); color: var(--primary);}
+        .status.overdue { background: rgba(244,67,54,0.18); color: var(--danger);}
+        /* Notifications panel */
+        .dashboard-right {
+            flex: 1;
+            max-width: 340px;
+            min-width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .notifications-panel {
+            background: var(--glass-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+        }
+        .notifications-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .notifications-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .notification-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-top: 2px;
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-text {
+            font-size: 1rem;
+        }
+        .notification-time {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        @media (max-width: 1100px) {
+            .dashboard-wrapper {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .dashboard-right {
+                flex-direction: row;
+                max-width: none;
+                min-width: 0;
+                gap: 24px;
+            }
+        }
+        @media (max-width: 900px) {
+            .dashboard-row {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .activity-timeline, .quick-actions {
+                max-width: none;
+                min-width: 0;
+            }
+        }
+        @media (max-width: 700px) {
+            .sidebar {
+                position: fixed;
+                width: var(--sidebar-collapsed);
+                padding: 24px 0 16px 0;
+            }
+            .sidebar .logo, .sidebar a span:not(.icon) {
+                display: none;
+            }
+            .sidebar a {
+                justify-content: center;
+                padding: 12px 0;
+                border-radius: 12px;
+            }
+            .main-content {
+                margin-left: var(--sidebar-collapsed);
+                padding-left: 0;
+            }
+            .header, .dashboard-wrapper {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+        @media (max-width: 500px) {
+            .header-title {
+                font-size: 1.2rem;
+            }
+            .kpi-cards {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-table-card, .activity-timeline, .quick-actions, .notifications-panel {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">Inven</div>
+        <nav>
+            <ul>
+                <li><a class="active" href="#"><span class="icon">&#x1F4C8;</span><span>Dashboard</span></a></li>
+                <li><a href="#"><span class="icon">&#x1F465;</span><span>Clients</span></a></li>
+                <li><a href="#"><span class="icon">&#x1F4C4;</span><span>Projects</span></a></li>
+                <li><a href="#"><span class="icon">&#x1F4C1;</span><span>Files</span></a></li>
+                <li><a href="#"><span class="icon">&#x2709;&#xFE0F;</span><span>Messages</span></a></li>
+                <li><a href="#"><span class="icon">&#x1F4B3;</span><span>Invoices</span></a></li>
+            </ul>
+        </nav>
+        <div class="settings">
+            <ul>
+                <li><a href="#"><span class="icon">&#9881;&#65039;</span><span>Settings</span></a></li>
+            </ul>
+        </div>
+    </aside>
+    <main class="main-content">
+        <div class="header">
+            <div class="header-title">Admin Dashboard</div>
+        </div>
+        <div class="dashboard-wrapper">
+            <section class="dashboard-main">
+                <!-- KPI Cards -->
+                <div class="kpi-cards">
+                    <div class="kpi-card" onclick="alert('Total Clients details coming soon!')">
+                        <div class="kpi-title">Total Clients</div>
+                        <div class="kpi-value" id="kpi-total-clients">128</div>
+                        <div class="kpi-trend">&#9650; 4% this month</div>
+                        <!-- TODO: Load total clients from Firebase Firestore -->
+                    </div>
+                    <div class="kpi-card" onclick="alert('Active Projects details coming soon!')">
+                        <div class="kpi-title">Active Projects</div>
+                        <div class="kpi-value" id="kpi-active-projects">23</div>
+                        <div class="kpi-trend">&#9650; 2 new</div>
+                        <!-- TODO: Load active projects from Firestore -->
+                    </div>
+                    <div class="kpi-card" onclick="alert('Revenue details coming soon!')">
+                        <div class="kpi-title">Revenue</div>
+                        <div class="kpi-value" id="kpi-revenue">$12,500</div>
+                        <div class="kpi-trend">&#9650; 8% this month</div>
+                        <!-- TODO: Load revenue from Firestore -->
+                    </div>
+                    <div class="kpi-card kpi-danger" onclick="alert('Open Tickets details coming soon!')">
+                        <div class="kpi-title">Open Tickets</div>
+                        <div class="kpi-value" id="kpi-open-tickets">7</div>
+                        <div class="kpi-trend">&#9660; 1 closed</div>
+                        <!-- TODO: Load open tickets from Firestore -->
+                    </div>
+                </div>
+                <div class="dashboard-row">
+                    <!-- Activity Timeline -->
+                    <div class="activity-timeline">
+                        <div class="timeline-title">Recent Activity</div>
+                        <ul class="timeline-list" id="timeline-list">
+                            <li class="timeline-item">
+                                <span class="timeline-dot"></span>
+                                <div class="timeline-content">
+                                    <div class="timeline-desc"><b>Jane Doe</b> created <b>Project Apollo</b></div>
+                                    <div class="timeline-time">5 mins ago</div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-dot"></span>
+                                <div class="timeline-content">
+                                    <div class="timeline-desc"><b>Invoice #1045</b> sent to <b>Acme Corp</b></div>
+                                    <div class="timeline-time">30 mins ago</div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-dot"></span>
+                                <div class="timeline-content">
+                                    <div class="timeline-desc"><b>File "specs.pdf"</b> uploaded to <b>Project Nova</b></div>
+                                    <div class="timeline-time">1 hr ago</div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-dot"></span>
+                                <div class="timeline-content">
+                                    <div class="timeline-desc"><b>Support ticket</b> closed by <b>Admin</b></div>
+                                    <div class="timeline-time">2 hrs ago</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- TODO: Load recent activity from Firestore -->
+                    </div>
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <div class="quick-actions-title">Quick Actions</div>
+                        <div class="quick-actions-list">
+                            <button class="quick-action-btn" onclick="alert('Create Client action coming soon!')">&#x2795; Create Client</button>
+                            <button class="quick-action-btn" onclick="alert('New Project action coming soon!')">&#x1F4C4; New Project</button>
+                            <button class="quick-action-btn" onclick="alert('Upload File action coming soon!')">&#x1F4C1; Upload File</button>
+                            <button class="quick-action-btn" onclick="alert('Send Invoice action coming soon!')">&#x1F4B3; Send Invoice</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Projects Table -->
+                <div class="dashboard-table-card">
+                    <div class="table-title">Recent Projects</div>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Client</th>
+                                    <th>Progress</th>
+                                    <th>Status</th>
+                                    <th>Due</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projects-table">
+                                <tr>
+                                    <td>Apollo</td>
+                                    <td>Acme Corp</td>
+                                    <td>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar" style="width: 75%"></div>
+                                        </div>
+                                        75%
+                                    </td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>2024-07-15</td>
+                                </tr>
+                                <tr>
+                                    <td>Nova</td>
+                                    <td>Globex Inc</td>
+                                    <td>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                        100%
+                                    </td>
+                                    <td><span class="status completed">Completed</span></td>
+                                    <td>2024-06-30</td>
+                                </tr>
+                                <tr>
+                                    <td>Orion</td>
+                                    <td>Stark LLC</td>
+                                    <td>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar" style="width: 48%"></div>
+                                        </div>
+                                        48%
+                                    </td>
+                                    <td><span class="status paused">Paused</span></td>
+                                    <td>2024-08-09</td>
+                                </tr>
+                                <tr>
+                                    <td>Helios</td>
+                                    <td>Wayne Enterprises</td>
+                                    <td>
+                                        <div class="progress-bar-bg">
+                                            <div class="progress-bar" style="width: 30%"></div>
+                                        </div>
+                                        30%
+                                    </td>
+                                    <td><span class="status overdue">Overdue</span></td>
+                                    <td>2024-06-10</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- TODO: Load recent projects from Firestore -->
+                    </div>
+                </div>
+            </section>
+            <aside class="dashboard-right">
+                <!-- Notifications Panel -->
+                <div class="notifications-panel">
+                    <div class="notifications-title">Notifications</div>
+                    <ul class="notifications-list" id="notifications-list">
+                        <li class="notification-item">
+                            <span class="notification-icon">&#x1F514;</span>
+                            <div class="notification-content">
+                                <div class="notification-text"><b>Payment received</b> from Acme Corp</div>
+                                <div class="notification-time">Just now</div>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <span class="notification-icon">&#x26A0;&#xFE0F;</span>
+                            <div class="notification-content">
+                                <div class="notification-text"><b>Project Helios</b> is overdue</div>
+                                <div class="notification-time">1 hr ago</div>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <span class="notification-icon">&#x1F4E2;</span>
+                            <div class="notification-content">
+                                <div class="notification-text"><b>New client</b> registered: Stark LLC</div>
+                                <div class="notification-time">3 hrs ago</div>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <span class="notification-icon">&#x1F4C8;</span>
+                            <div class="notification-content">
+                                <div class="notification-text"><b>Revenue up</b> 8% this month</div>
+                                <div class="notification-time">Yesterday</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- TODO: Load notifications from Firestore -->
+                </div>
+            </aside>
+        </div>
+    </main>
+    <script>
+        // Placeholder actions for quick action buttons and KPI cards
+        // TODO: Replace with real implementation and data loading from Firebase Auth/Firestore
+        // Example: document.getElementById('kpi-total-clients').textContent = fetchFromFirestore(...)
+    </script>
+</body>
+</html>

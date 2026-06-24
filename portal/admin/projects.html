@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Management - Admin</title>
+    <style>
+        /* Reset and base */
+        * {
+            box-sizing: border-box;
+        }
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            padding-top: 2rem;
+            position: fixed;
+            height: 100vh;
+            left: 0; top: 0;
+            z-index: 1000;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-left: 1.5rem;
+        }
+        .sidebar nav a {
+            text-decoration: none;
+            color: #bbb;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .sidebar nav a.active,
+        .sidebar nav a:hover {
+            background: rgba(255 255 255 / 0.15);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Main content area */
+        .main-content {
+            margin-left: 240px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #181818;
+            padding: 1.5rem 2rem 2rem 2rem;
+        }
+
+        /* Header */
+        header {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255 255 255 / 0.1);
+            user-select: none;
+        }
+
+        /* Summary cards container */
+        .summary-cards {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 1.2rem;
+        }
+        .card {
+            background: rgba(255 255 255 / 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255 255 255 / 0.05);
+            transition: background-color 0.3s;
+        }
+        .card:hover {
+            background: rgba(255 255 255 / 0.15);
+        }
+        .card .title {
+            font-size: 1rem;
+            color: #bbb;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .card .value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .toolbar input[type="search"] {
+            flex-grow: 1;
+            max-width: 320px;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255 255 255 / 0.1);
+            color: #eee;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .toolbar input[type="search"]::placeholder {
+            color: #ccc;
+        }
+        .toolbar input[type="search"]:focus {
+            outline: none;
+            background: rgba(255 255 255 / 0.2);
+        }
+        .toolbar button {
+            background: #3a86ff;
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.6rem 1.4rem;
+            font-size: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+        .toolbar button:hover {
+            background: #265fcb;
+        }
+
+        /* Table container */
+        .table-container {
+            margin-top: 1.8rem;
+            overflow-x: auto;
+            border-radius: 16px;
+            background: rgba(255 255 255 / 0.05);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+        }
+        thead tr {
+            background: rgba(255 255 255 / 0.1);
+            user-select: none;
+        }
+        thead th {
+            text-align: left;
+            padding: 1rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #ddd;
+            border-bottom: 1px solid rgba(255 255 255 / 0.15);
+        }
+        tbody tr {
+            transition: background-color 0.3s;
+            cursor: default;
+        }
+        tbody tr:hover {
+            background: rgba(255 255 255 / 0.08);
+        }
+        tbody td {
+            padding: 0.9rem 1.2rem;
+            vertical-align: middle;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: relative;
+            background: rgba(255 255 255 / 0.15);
+            border-radius: 12px;
+            height: 14px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .progress-bar > div {
+            height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #3a86ff, #00d4ff);
+            width: 0%;
+            animation: progressBarAnim 2s forwards ease-out;
+        }
+        @keyframes progressBarAnim {
+            from { width: 0; }
+            to { width: var(--progress); }
+        }
+
+        /* Status badges */
+        .status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            display: inline-block;
+            min-width: 70px;
+            user-select: none;
+        }
+        .status.active {
+            background: #3a86ff;
+            color: #d0e9ff;
+        }
+        .status.completed {
+            background: #28a745;
+            color: #c2f0c2;
+        }
+        .status.at-risk {
+            background: #dc3545;
+            color: #f9c6c5;
+        }
+        .status.pending {
+            background: #ffc107;
+            color: #fff8d6;
+        }
+
+        /* Actions buttons */
+        .actions button {
+            background: transparent;
+            border: none;
+            color: #bbb;
+            cursor: pointer;
+            margin-right: 0.6rem;
+            font-size: 1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            transition: background-color 0.2s, color 0.2s;
+            user-select: none;
+        }
+        .actions button:hover {
+            background: rgba(255 255 255 / 0.15);
+            color: #fff;
+        }
+        .actions button:last-child {
+            margin-right: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                width: 200px;
+                z-index: 1001;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1rem 1rem 2rem 1rem;
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .menu-toggle {
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 1.6rem;
+                cursor: pointer;
+                user-select: none;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .toolbar input[type="search"] {
+                max-width: 100%;
+            }
+            .toolbar button {
+                width: 100%;
+                max-width: 320px;
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <nav>
+            <a href="#" >Dashboard</a>
+            <a href="#">Clients</a>
+            <a href="#" class="active">Projects</a>
+            <a href="#">Files</a>
+            <a href="#">Messages</a>
+            <a href="#">Invoices</a>
+            <a href="#">Settings</a>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <header>
+            <span>Project Management</span>
+            <button class="menu-toggle" aria-label="Toggle Menu" title="Toggle Menu" onclick="toggleSidebar()" style="display:none;">☰</button>
+        </header>
+
+        <section class="summary-cards" aria-label="Summary statistics">
+            <article class="card" tabindex="0">
+                <div class="title">Total Projects</div>
+                <div class="value" id="total-projects">24</div>
+            </article>
+            <article class="card" tabindex="0">
+                <div class="title">Active Projects</div>
+                <div class="value" id="active-projects">14</div>
+            </article>
+            <article class="card" tabindex="0">
+                <div class="title">Completed Projects</div>
+                <div class="value" id="completed-projects">7</div>
+            </article>
+            <article class="card" tabindex="0">
+                <div class="title">At Risk</div>
+                <div class="value" id="at-risk-projects">3</div>
+            </article>
+        </section>
+
+        <section class="toolbar" role="search" aria-label="Project search and actions">
+            <input type="search" id="searchInput" placeholder="Search projects..." aria-label="Search projects" />
+            <button id="newProjectBtn" aria-label="Add new project">+ New Project</button>
+        </section>
+
+        <section class="table-container" aria-label="Projects table">
+            <table role="grid" aria-describedby="tableDesc" id="projectsTable">
+                <caption id="tableDesc" class="sr-only">List of projects with details and actions</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Project</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Progress</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Manager</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TODO: Replace placeholder rows with Firestore populated data -->
+                    <tr>
+                        <td>Website Redesign</td>
+                        <td>Acme Corp</td>
+                        <td>
+                            <div class="progress-bar" aria-label="Progress: 75%">
+                                <div style="--progress: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                            </div>
+                        </td>
+                        <td><span class="status active">Active</span></td>
+                        <td>2024-07-15</td>
+                        <td>Jane Doe</td>
+                        <td class="actions">
+                            <button aria-label="View Website Redesign project" onclick="actionAlert('View', 'Website Redesign')">👁️</button>
+                            <button aria-label="Edit Website Redesign project" onclick="actionAlert('Edit', 'Website Redesign')">✏️</button>
+                            <button aria-label="Archive Website Redesign project" onclick="actionAlert('Archive', 'Website Redesign')">🗄️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mobile App Dev</td>
+                        <td>Beta LLC</td>
+                        <td>
+                            <div class="progress-bar" aria-label="Progress: 40%">
+                                <div style="--progress: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                            </div>
+                        </td>
+                        <td><span class="status at-risk">At Risk</span></td>
+                        <td>2024-06-30</td>
+                        <td>John Smith</td>
+                        <td class="actions">
+                            <button aria-label="View Mobile App Dev project" onclick="actionAlert('View', 'Mobile App Dev')">👁️</button>
+                            <button aria-label="Edit Mobile App Dev project" onclick="actionAlert('Edit', 'Mobile App Dev')">✏️</button>
+                            <button aria-label="Archive Mobile App Dev project" onclick="actionAlert('Archive', 'Mobile App Dev')">🗄️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Marketing Campaign</td>
+                        <td>Gamma Inc</td>
+                        <td>
+                            <div class="progress-bar" aria-label="Progress: 100%">
+                                <div style="--progress: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                            </div>
+                        </td>
+                        <td><span class="status completed">Completed</span></td>
+                        <td>2024-05-20</td>
+                        <td>Mary Johnson</td>
+                        <td class="actions">
+                            <button aria-label="View Marketing Campaign project" onclick="actionAlert('View', 'Marketing Campaign')">👁️</button>
+                            <button aria-label="Edit Marketing Campaign project" onclick="actionAlert('Edit', 'Marketing Campaign')">✏️</button>
+                            <button aria-label="Archive Marketing Campaign project" onclick="actionAlert('Archive', 'Marketing Campaign')">🗄️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CRM Integration</td>
+                        <td>Delta Co</td>
+                        <td>
+                            <div class="progress-bar" aria-label="Progress: 60%">
+                                <div style="--progress: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                            </div>
+                        </td>
+                        <td><span class="status active">Active</span></td>
+                        <td>2024-08-01</td>
+                        <td>James Lee</td>
+                        <td class="actions">
+                            <button aria-label="View CRM Integration project" onclick="actionAlert('View', 'CRM Integration')">👁️</button>
+                            <button aria-label="Edit CRM Integration project" onclick="actionAlert('Edit', 'CRM Integration')">✏️</button>
+                            <button aria-label="Archive CRM Integration project" onclick="actionAlert('Archive', 'CRM Integration')">🗄️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>New Product Launch</td>
+                        <td>Epsilon Ltd</td>
+                        <td>
+                            <div class="progress-bar" aria-label="Progress: 20%">
+                                <div style="--progress: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+                            </div>
+                        </td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>2024-09-10</td>
+                        <td>Linda Green</td>
+                        <td class="actions">
+                            <button aria-label="View New Product Launch project" onclick="actionAlert('View', 'New Product Launch')">👁️</button>
+                            <button aria-label="Edit New Product Launch project" onclick="actionAlert('Edit', 'New Product Launch')">✏️</button>
+                            <button aria-label="Archive New Product Launch project" onclick="actionAlert('Archive', 'New Product Launch')">🗄️</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        // Responsive sidebar toggle on small screens
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+        // Show menu toggle button on small screens
+        function handleResize() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            if(window.innerWidth <= 768){
+                menuToggle.style.display = 'inline-block';
+            } else {
+                menuToggle.style.display = 'none';
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('load', handleResize);
+
+        // Search/filter projects by text
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const table = document.getElementById('projectsTable');
+            const tbody = table.tBodies[0];
+            for(let row of tbody.rows){
+                let textContent = row.textContent.toLowerCase();
+                if(textContent.indexOf(filter) > -1){
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+
+        // Action buttons placeholder alerts
+        function actionAlert(action, projectName){
+            alert(action + ' action triggered for project: ' + projectName);
+            // TODO: Implement actual functionality for View/Edit/Archive with Firestore integration
+        }
+
+        // New Project button alert
+        document.getElementById('newProjectBtn').addEventListener('click', function(){
+            alert('New Project creation triggered');
+            // TODO: Implement New Project creation flow with Firestore integration
+        });
+
+        // TODO: Implement Firestore integration to populate summary cards and project table dynamically
+    </script>
+</body>
+</html>

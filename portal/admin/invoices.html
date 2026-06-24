@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Management - Admin Portal</title>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-bg: #181c23;
+      --sidebar-active: #232a34;
+      --sidebar-hover: #232a34;
+      --bg: #15171e;
+      --card-bg: rgba(36, 41, 51, 0.85);
+      --glass-bg: rgba(36, 41, 51, 0.55);
+      --header-bg: #232a34cc;
+      --accent: #6c63ff;
+      --accent2: #23d18b;
+      --danger: #ff4d6d;
+      --warning: #ffb347;
+      --text: #f7f7fa;
+      --text-muted: #a7adc2;
+      --pill-paid: #2ecc71;
+      --pill-pending: #f1c40f;
+      --pill-overdue: #e74c3c;
+      --shadow: 0 4px 32px 0 rgba(0,0,0,0.18), 0 1.5px 9px 0 rgba(0,0,0,0.09);
+      --border-radius: 14px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      width: 230px;
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0 0 0;
+      box-shadow: 2px 0 12px 0 rgba(0,0,0,0.12);
+      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+    .sidebar .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+    .sidebar nav {
+      flex: 1;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li {
+      margin-bottom: 2px;
+    }
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      padding: 13px 34px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 1.08rem;
+      border-radius: 0 30px 30px 0;
+      transition: background 0.14s, color 0.14s;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background: var(--sidebar-active);
+      color: var(--accent);
+    }
+    .sidebar a .icon {
+      margin-right: 15px;
+      font-size: 1.22em;
+    }
+    .main-content {
+      margin-left: 230px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      background: var(--header-bg);
+      padding: 28px 36px 18px 36px;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text);
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    .summary-cards {
+      display: flex;
+      gap: 28px;
+      margin: 32px 36px 0 36px;
+      flex-wrap: wrap;
+    }
+    .summary-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 26px 32px 22px 32px;
+      min-width: 230px;
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .summary-card .label {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .summary-card .value {
+      font-size: 2.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+    .summary-card .sub {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 36px 36px 18px 36px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .toolbar .search {
+      flex: 1 1 320px;
+      max-width: 350px;
+      position: relative;
+    }
+    .toolbar .search input {
+      width: 100%;
+      padding: 11px 14px 11px 38px;
+      background: var(--glass-bg);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.08);
+      transition: background 0.12s;
+    }
+    .toolbar .search .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.2em;
+    }
+    .toolbar .create-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.06rem;
+      box-shadow: 0 2px 8px 0 rgba(108,99,255,0.08);
+      cursor: pointer;
+      transition: background 0.13s;
+    }
+    .toolbar .create-btn:hover {
+      background: #554ee2;
+    }
+    .glass-table-container {
+      margin: 0 36px 36px 36px;
+      background: var(--glass-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: auto;
+      padding: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 900px;
+      background: transparent;
+    }
+    thead {
+      background: rgba(36,41,51,0.23);
+    }
+    th, td {
+      padding: 15px 18px;
+      text-align: left;
+      font-size: 1.01rem;
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border-bottom: 1.5px solid #232a34;
+    }
+    tr {
+      transition: background 0.11s;
+    }
+    tbody tr:hover {
+      background: rgba(108,99,255,0.08);
+    }
+    td {
+      border-bottom: 1px solid #232a34;
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .status-pill {
+      display: inline-block;
+      padding: 4px 13px;
+      border-radius: 18px;
+      font-size: 0.95em;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .status-paid {
+      background: var(--pill-paid);
+    }
+    .status-pending {
+      background: var(--pill-pending);
+      color: #232a34;
+    }
+    .status-overdue {
+      background: var(--pill-overdue);
+    }
+    .action-btn {
+      border: none;
+      outline: none;
+      padding: 7px 13px;
+      border-radius: 7px;
+      margin-right: 7px;
+      font-size: 0.98em;
+      background: #232a34;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.12s;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .action-btn:last-child {
+      margin-right: 0;
+    }
+    .action-btn.view { color: var(--accent2);}
+    .action-btn.download { color: var(--accent);}
+    .action-btn.markpaid { color: var(--pill-paid);}
+    .action-btn:hover {
+      background: #303749;
+    }
+    @media (max-width: 1050px) {
+      .summary-cards {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .sidebar {
+        position: static;
+        width: 100vw;
+        flex-direction: row;
+        height: auto;
+        min-height: unset;
+        padding: 0;
+        box-shadow: none;
+      }
+      .sidebar nav {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+      }
+      .sidebar ul {
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        justify-content: space-around;
+      }
+      .sidebar a {
+        border-radius: 0;
+        padding: 13px 10px;
+        justify-content: center;
+      }
+      .sidebar .logo {
+        display: none;
+      }
+    }
+    @media (max-width: 850px) {
+      .toolbar, .summary-cards, .glass-table-container {
+        margin-left: 12px;
+        margin-right: 12px;
+      }
+      .glass-table-container {
+        padding: 0;
+      }
+    }
+    @media (max-width: 700px) {
+      .header {
+        font-size: 1.2rem;
+        padding: 18px 10px 12px 10px;
+      }
+      .toolbar .search input {
+        font-size: 0.98rem;
+      }
+      table {
+        min-width: 600px;
+      }
+    }
+    @media (max-width: 500px) {
+      .summary-card .value {
+        font-size: 1.3rem;
+      }
+      th, td {
+        padding: 7px 5px;
+        font-size: 0.91rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">Inven Admin</div>
+    <nav>
+      <ul>
+        <li><a href="#" ><span class="icon">🏠</span>Dashboard</a></li>
+        <li><a href="#"><span class="icon">👤</span>Clients</a></li>
+        <li><a href="#"><span class="icon">📁</span>Projects</a></li>
+        <li><a href="#"><span class="icon">🗂️</span>Files</a></li>
+        <li><a href="#"><span class="icon">💬</span>Messages</a></li>
+        <li><a href="#" class="active"><span class="icon">🧾</span>Invoices</a></li>
+        <li><a href="#"><span class="icon">⚙️</span>Settings</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="main-content">
+    <div class="header">
+      Invoice Management
+    </div>
+    <div class="summary-cards">
+      <div class="summary-card">
+        <div class="label">Total Revenue</div>
+        <div class="value">$18,230</div>
+        <div class="sub">All time</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Outstanding Invoices</div>
+        <div class="value">$3,150</div>
+        <div class="sub">5 invoices</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Paid This Month</div>
+        <div class="value">$2,400</div>
+        <div class="sub">June 2024</div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input id="invoice-search" type="text" placeholder="Search invoices...">
+      </div>
+      <button class="create-btn" id="create-invoice-btn">+ Create Invoice</button>
+    </div>
+    <div class="glass-table-container">
+      <table id="invoice-table">
+        <thead>
+          <tr>
+            <th>Invoice ID</th>
+            <th>Client</th>
+            <th>Project</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#INV-1001</td>
+            <td>Acme Corp</td>
+            <td>Website Revamp</td>
+            <td>$1,200</td>
+            <td><span class="status-pill status-paid">Paid</span></td>
+            <td>2024-05-20</td>
+            <td>
+              <button class="action-btn view" onclick="alert('View Invoice #INV-1001 (TODO: implement view modal)')">👁️ View</button>
+              <button class="action-btn download" onclick="alert('Download Invoice #INV-1001 (TODO: implement download)')">⬇️ Download</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#INV-1002</td>
+            <td>Beta LLC</td>
+            <td>App Design</td>
+            <td>$950</td>
+            <td><span class="status-pill status-pending">Pending</span></td>
+            <td>2024-06-10</td>
+            <td>
+              <button class="action-btn view" onclick="alert('View Invoice #INV-1002 (TODO: implement view modal)')">👁️ View</button>
+              <button class="action-btn download" onclick="alert('Download Invoice #INV-1002 (TODO: implement download)')">⬇️ Download</button>
+              <button class="action-btn markpaid" onclick="alert('Mark Invoice #INV-1002 as Paid (TODO: implement status update)')">✔️ Mark Paid</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#INV-1003</td>
+            <td>Gamma Inc</td>
+            <td>SEO Audit</td>
+            <td>$600</td>
+            <td><span class="status-pill status-overdue">Overdue</span></td>
+            <td>2024-05-30</td>
+            <td>
+              <button class="action-btn view" onclick="alert('View Invoice #INV-1003 (TODO: implement view modal)')">👁️ View</button>
+              <button class="action-btn download" onclick="alert('Download Invoice #INV-1003 (TODO: implement download)')">⬇️ Download</button>
+              <button class="action-btn markpaid" onclick="alert('Mark Invoice #INV-1003 as Paid (TODO: implement status update)')">✔️ Mark Paid</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#INV-1004</td>
+            <td>Acme Corp</td>
+            <td>Logo Design</td>
+            <td>$400</td>
+            <td><span class="status-pill status-paid">Paid</span></td>
+            <td>2024-06-01</td>
+            <td>
+              <button class="action-btn view" onclick="alert('View Invoice #INV-1004 (TODO: implement view modal)')">👁️ View</button>
+              <button class="action-btn download" onclick="alert('Download Invoice #INV-1004 (TODO: implement download)')">⬇️ Download</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#INV-1005</td>
+            <td>Delta Co</td>
+            <td>Maintenance</td>
+            <td>$1,000</td>
+            <td><span class="status-pill status-pending">Pending</span></td>
+            <td>2024-06-25</td>
+            <td>
+              <button class="action-btn view" onclick="alert('View Invoice #INV-1005 (TODO: implement view modal)')">👁️ View</button>
+              <button class="action-btn download" onclick="alert('Download Invoice #INV-1005 (TODO: implement download)')">⬇️ Download</button>
+              <button class="action-btn markpaid" onclick="alert('Mark Invoice #INV-1005 as Paid (TODO: implement status update)')">✔️ Mark Paid</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    // TODO: Integrate Firebase/Firestore to load, filter, and manage invoices dynamically.
+    document.getElementById('invoice-search').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('#invoice-table tbody tr');
+      rows.forEach(row => {
+        let match = false;
+        row.querySelectorAll('td').forEach(td => {
+          if (td.innerText.toLowerCase().includes(query)) match = true;
+        });
+        row.style.display = match ? '' : 'none';
+      });
+    });
+    document.getElementById('create-invoice-btn').addEventListener('click', function() {
+      alert('Create Invoice (TODO: implement invoice creation modal & Firestore integration)');
+    });
+    // TODO: Replace placeholder alerts with actual modals and Firestore actions.
+  </script>
+</body>
+</html>

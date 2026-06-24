@@ -1,4 +1,73 @@
-<!-- Sidebar component placeholder -->
-<nav class="portal-sidebar">
-  <!-- TODO: Add sidebar navigation links -->
-</nav>
+<!-- ========================================
+     Portal Sidebar Component
+     ======================================== -->
+<aside class="portal-sidebar" data-component="sidebar">
+  <nav class="sidebar-nav">
+    <!-- Main Navigation -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Main</div>
+      <a href="dashboard.html" class="sidebar-nav-item active" data-page="dashboard">
+        <div class="sidebar-nav-icon">📊</div>
+        <span class="sidebar-text">Dashboard</span>
+      </a>
+      <a href="projects/index.html" class="sidebar-nav-item" data-page="projects">
+        <div class="sidebar-nav-icon">📁</div>
+        <span class="sidebar-text">Projects</span>
+      </a>
+      <a href="files/index.html" class="sidebar-nav-item" data-page="files">
+        <div class="sidebar-nav-icon">📄</div>
+        <span class="sidebar-text">Files</span>
+      </a>
+      <a href="invoices/index.html" class="sidebar-nav-item" data-page="invoices">
+        <div class="sidebar-nav-icon">💰</div>
+        <span class="sidebar-text">Billing</span>
+      </a>
+    </div>
+
+    <!-- Management -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Management</div>
+      <a href="revisions/index.html" class="sidebar-nav-item" data-page="revisions">
+        <div class="sidebar-nav-icon">🔄</div>
+        <span class="sidebar-text">Revisions</span>
+      </a>
+      <a href="support/tickets.html" class="sidebar-nav-item" data-page="support">
+        <div class="sidebar-nav-icon">🎫</div>
+        <span class="sidebar-text">Support</span>
+      </a>
+      <a href="notifications.html" class="sidebar-nav-item" data-page="notifications">
+        <div class="sidebar-nav-icon">🔔</div>
+        <span class="sidebar-text">Notifications</span>
+      </a>
+    </div>
+
+    <!-- Analytics -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Analytics</div>
+      <a href="analytics/overview.html" class="sidebar-nav-item" data-page="analytics">
+        <div class="sidebar-nav-icon">📈</div>
+        <span class="sidebar-text">Overview</span>
+      </a>
+      <a href="analytics/traffic.html" class="sidebar-nav-item" data-page="traffic">
+        <div class="sidebar-nav-icon">🌐</div>
+        <span class="sidebar-text">Traffic</span>
+      </a>
+      <a href="analytics/uptime.html" class="sidebar-nav-item" data-page="uptime">
+        <div class="sidebar-nav-icon">⏱️</div>
+        <span class="sidebar-text">Uptime</span>
+      </a>
+    </div>
+
+    <!-- User Section -->
+    <div class="sidebar-section" style="margin-top: auto; padding-top: var(--space-8);">
+      <a href="profile.html" class="sidebar-nav-item" data-page="profile">
+        <div class="sidebar-nav-icon">👤</div>
+        <span class="sidebar-text">Profile</span>
+      </a>
+      <button class="sidebar-nav-item" data-action="toggle-sidebar">
+        <div class="sidebar-nav-icon">◀</div>
+        <span class="sidebar-text">Collapse</span>
+      </button>
+    </div>
+  </nav>
+</aside>

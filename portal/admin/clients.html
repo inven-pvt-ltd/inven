@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Admin - Client Management</title>
+    <!-- Google Fonts for modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 240px;
+            --primary: #5e81ff;
+            --accent: #c084fc;
+            --bg-dark: #191c22;
+            --bg-glass: rgba(30,32,38,0.8);
+            --glass-blur: 18px;
+            --text-main: #f4f6fb;
+            --text-secondary: #a0aec0;
+            --border-glass: rgba(255,255,255,0.08);
+            --card-bg: rgba(35,38,45,0.8);
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e42;
+            --pending: #fbbf24;
+            --inactive: #64748b;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #232b3b 0%, #1e222a 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            margin: 0;
+        }
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-glass);
+            border-right: 1px solid var(--border-glass);
+            backdrop-filter: blur(var(--glass-blur));
+            display: flex;
+            flex-direction: column;
+            padding: 32px 0 16px 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 20;
+        }
+        .sidebar .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .sidebar nav {
+            flex: 1;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 12px 32px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+            transition: background 0.18s, color 0.18s, border-color 0.18s;
+            border-radius: 0 20px 20px 0;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            color: var(--primary);
+            background: rgba(80,80,120,0.13);
+            border-left: 4px solid var(--primary);
+        }
+        .sidebar .sidebar-footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.93rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            padding: 32px 36px 12px 36px;
+            background: none;
+        }
+        .header-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0 0 8px 0;
+        }
+        .kpi-cards {
+            display: flex;
+            gap: 24px;
+            padding: 0 36px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .kpi-card {
+            flex: 1 1 200px;
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 24px 22px;
+            box-shadow: 0 2px 18px 0 rgba(40,40,80,0.09);
+            display: flex;
+            flex-direction: column;
+            min-width: 170px;
+            border: 1px solid var(--border-glass);
+        }
+        .kpi-label {
+            color: var(--text-secondary);
+            font-size: 1.06rem;
+            margin-bottom: 6px;
+        }
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .kpi-card.enterprise .kpi-value { color: var(--accent);}
+        .kpi-card.pending .kpi-value { color: var(--pending);}
+        .kpi-card.active .kpi-value { color: var(--success);}
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 36px 18px 36px;
+            flex-wrap: wrap;
+        }
+        .toolbar .search-box {
+            flex: 1 1 260px;
+            position: relative;
+        }
+        .toolbar input[type="search"] {
+            width: 100%;
+            padding: 11px 14px 11px 38px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glass);
+            background: rgba(36,38,48,0.95);
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.16s;
+        }
+        .toolbar .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            pointer-events: none;
+        }
+        .toolbar .create-btn {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 1.03rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: box-shadow 0.18s, background 0.18s;
+            box-shadow: 0 2px 10px 0 rgba(80,80,120,0.13);
+        }
+        .toolbar .create-btn:hover {
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            box-shadow: 0 4px 24px 0 rgba(80,80,120,0.17);
+        }
+        .table-container {
+            padding: 0 36px 48px 36px;
+            flex: 1;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 6px;
+            min-width: 900px;
+        }
+        thead {
+            background: rgba(50,55,70,0.92);
+        }
+        th, td {
+            padding: 16px 14px;
+            text-align: left;
+        }
+        th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1.01rem;
+            letter-spacing: 0.02em;
+        }
+        tbody tr {
+            border-bottom: 1px solid var(--border-glass);
+            transition: background 0.15s;
+        }
+        tbody tr:hover {
+            background: rgba(60,70,90,0.22);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 0.98em;
+            font-weight: 600;
+            background: var(--border-glass);
+            color: var(--text-secondary);
+        }
+        .status-active {
+            background: rgba(34,197,94,0.15);
+            color: var(--success);
+        }
+        .status-pending {
+            background: rgba(251,191,36,0.15);
+            color: var(--pending);
+        }
+        .status-inactive {
+            background: rgba(100,116,139,0.16);
+            color: var(--inactive);
+        }
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 1.07em;
+            cursor: pointer;
+            border-radius: 7px;
+            padding: 7px 10px;
+            transition: background 0.13s, color 0.13s;
+        }
+        .action-btn.view { color: var(--primary);}
+        .action-btn.edit { color: var(--accent);}
+        .action-btn.reset { color: var(--pending);}
+        .action-btn.delete { color: var(--danger);}
+        .action-btn:hover {
+            background: rgba(80,80,120,0.13);
+            color: #fff;
+        }
+        /* Modal/Slide-over Placeholder */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(24,28,34,0.75);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 42px 32px 32px 32px;
+            min-width: 360px;
+            min-height: 180px;
+            box-shadow: 0 8px 48px 0 rgba(10,10,20,0.18);
+            border: 1px solid var(--border-glass);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: color 0.14s;
+        }
+        .modal .close-btn:hover { color: var(--danger);}
+        .modal .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .kpi-cards { flex-direction: column; gap: 16px;}
+            .main-content { margin-left: 0;}
+            .sidebar { position: static; width: 100%; flex-direction: row; border-right: none; border-bottom: 1px solid var(--border-glass);}
+            .sidebar nav { flex-direction: row;}
+            .sidebar ul { display: flex; }
+            .sidebar li { margin: 0 8px;}
+        }
+        @media (max-width: 700px) {
+            .header, .toolbar, .table-container { padding-left: 10px; padding-right: 10px;}
+            .kpi-card { min-width: 120px;}
+            table { min-width: 650px;}
+        }
+        @media (max-width: 500px) {
+            .kpi-cards { gap: 8px;}
+            .kpi-card { padding: 12px 8px;}
+            .header-title { font-size: 1.3rem;}
+            .toolbar .create-btn { padding: 8px 10px; font-size: 0.95rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="logo">Inven Admin</div>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="clients.html" class="active">Clients</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="messages.html">Messages</a></li>
+                    <li><a href="invoices.html">Invoices</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                &copy; 2024 Inven
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <div class="header-title">Client Management</div>
+            </header>
+            <section class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Clients</div>
+                    <div class="kpi-value" id="kpi-total">42</div>
+                </div>
+                <div class="kpi-card active">
+                    <div class="kpi-label">Active Clients</div>
+                    <div class="kpi-value" id="kpi-active">31</div>
+                </div>
+                <div class="kpi-card pending">
+                    <div class="kpi-label">Pending Onboarding</div>
+                    <div class="kpi-value" id="kpi-pending">6</div>
+                </div>
+                <div class="kpi-card enterprise">
+                    <div class="kpi-label">Enterprise Clients</div>
+                    <div class="kpi-value" id="kpi-enterprise">5</div>
+                </div>
+            </section>
+            <section class="toolbar">
+                <div class="search-box">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="search" id="client-search" placeholder="Search clients...">
+                </div>
+                <button class="create-btn" id="create-client-btn">+ Create Client</button>
+            </section>
+            <section class="table-container">
+                <table id="clients-table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Company</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Active Projects</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clients-tbody">
+                        <!-- Placeholder rows -->
+                        <tr>
+                            <td>Jane Doe</td>
+                            <td>Acme Inc.</td>
+                            <td>jane@acme.com</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>3</td>
+                            <td>2023-07-15</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
+                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
+                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
+                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>John Smith</td>
+                            <td>BetaSoft</td>
+                            <td>john@betasoft.com</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>0</td>
+                            <td>2024-01-03</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
+                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
+                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
+                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mary Lee</td>
+                            <td>EnterpriseX</td>
+                            <td>mary@enterprisex.com</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>7</td>
+                            <td>2022-11-21</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
+                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
+                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
+                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Alex Kim</td>
+                            <td>Gamma LLC</td>
+                            <td>alex@gammallc.com</td>
+                            <td><span class="status-badge status-inactive">Inactive</span></td>
+                            <td>0</td>
+                            <td>2023-03-09</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
+                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
+                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
+                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Priya Patel</td>
+                            <td>Delta Partners</td>
+                            <td>priya@deltapartners.com</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>1</td>
+                            <td>2024-04-10</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
+                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
+                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
+                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- More placeholder rows as needed -->
+                    </tbody>
+                </table>
+            </section>
+            <!-- Modal/Slide-over Placeholder for Create Client -->
+            <div class="modal-backdrop" id="modal-backdrop">
+                <div class="modal">
+                    <button class="close-btn" id="close-modal-btn" title="Close">&times;</button>
+                    <div class="modal-title">Create New Client</div>
+                    <!-- TODO: Implement client creation form and Firebase Auth + Firestore integration -->
+                    <p style="color:var(--text-secondary);margin-top:14px;">
+                        <em>Client creation form coming soon.<br>
+                        <strong>TODO:</strong> Integrate with Firebase Auth and Firestore to create and manage client accounts.</em>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Simple search filter for clients table
+        document.getElementById('client-search').addEventListener('input', function() {
+            const filter = this.value.trim().toLowerCase();
+            const rows = document.querySelectorAll('#clients-tbody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+
+        // Modal/Slide-over for Create Client
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        document.getElementById('create-client-btn').addEventListener('click', function() {
+            modalBackdrop.style.display = 'flex';
+        });
+        document.getElementById('close-modal-btn').addEventListener('click', function() {
+            modalBackdrop.style.display = 'none';
+        });
+        // Close modal on backdrop click
+        modalBackdrop.addEventListener('click', function(e) {
+            if (e.target === modalBackdrop) modalBackdrop.style.display = 'none';
+        });
+
+        // Placeholder alerts for actions
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                let action = btn.classList.contains('view') ? 'View'
+                    : btn.classList.contains('edit') ? 'Edit'
+                    : btn.classList.contains('reset') ? 'Reset Password'
+                    : btn.classList.contains('delete') ? 'Delete'
+                    : 'Action';
+                let client = btn.closest('tr').querySelector('td').innerText;
+                alert(`${action} for ${client} (TODO: Implement action and Firebase integration)`);
+            });
+        });
+
+        // TODO: Replace static table with dynamic Firestore data.
+        // TODO: Integrate Firebase Auth for client account creation and management.
+        // TODO: Implement modals for view/edit/reset password/delete with real data.
+    </script>
+</body>
+</html>

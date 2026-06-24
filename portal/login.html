@@ -3,18 +3,424 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal | Login</title>
+  <meta name="description" content="INVEN Portal - Secure authentication and client management">
+  <title>INVEN Portal | Secure Login</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/utilities.css">
   <link rel="stylesheet" href="css/portal.css">
   <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
-<body>
-  <!-- Login page placeholder -->
-  <main class="auth-page">
-    <h1>Login</h1>
-    <p>Use your agency credentials to access the client portal.</p>
-    <!-- TODO: Add login form -->
-  </main>
-  <script defer src="js/auth.js"></script>
+<body class="bg-primary">
+  <div class="auth-container">
+    <!-- Left Panel: Branding -->
+    <div class="auth-panel auth-panel-left">
+      <div class="auth-branding">
+        <div class="brand-logo">
+          <div class="logo-icon">𝐈</div>
+          <h1 class="logo-text">INVEN</h1>
+        </div>
+        <p class="brand-tagline">Enterprise Client Portal</p>
+        <p class="brand-description">Streamline project management, revisions, and client collaboration with our premium SaaS platform.</p>
+      </div>
+      <div class="auth-features">
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Real-time Project Tracking</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Secure File Management</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Invoice & Billing</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>24/7 Support Chat</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Login Form -->
+    <div class="auth-panel auth-panel-right">
+      <div class="auth-form-container">
+        <div class="form-header">
+          <h2 class="form-title">Welcome Back</h2>
+          <p class="form-subtitle">Sign in to access your portal</p>
+        </div>
+
+        <!-- Error/Success Messages -->
+        <div class="alert alert-error" id="errorMessage" style="display: none;">
+          <span class="alert-icon">⚠</span>
+          <span class="alert-text" id="errorText"></span>
+        </div>
+
+        <!-- Login Form -->
+        <form class="auth-form" id="loginForm" novalidate>
+          <div class="form-group">
+            <label for="email" class="form-label required">Email Address</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-input" 
+              placeholder="your@email.com"
+              required
+              autocomplete="email"
+              aria-label="Email address"
+            />
+            <p class="form-help-text">We'll never share your email</p>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label-row">
+              <label for="password" class="form-label required">Password</label>
+              <a href="forgot-password.html" class="form-link">Forgot?</a>
+            </div>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-input" 
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+              aria-label="Password"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="remember" name="remember" class="form-checkbox">
+              <span class="checkbox-label">Keep me signed in</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg">
+            <span>Sign In</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="5 12 19 12"></polyline>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="form-divider">
+          <span>Or continue with</span>
+        </div>
+
+        <!-- Social Auth (Firebase Integration Points) -->
+        <div class="social-auth">
+          <button type="button" class="social-auth-btn" data-provider="google">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <span>Google</span>
+          </button>
+          <button type="button" class="social-auth-btn" data-provider="microsoft">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+              <rect x="14" y="1" width="9" height="9" fill="#7FBA00"/>
+              <rect x="1" y="14" width="9" height="9" fill="#00A4EF"/>
+              <rect x="14" y="14" width="9" height="9" fill="#FFB900"/>
+            </svg>
+            <span>Microsoft</span>
+          </button>
+        </div>
+
+        <!-- Sign Up Link -->
+        <div class="auth-footer">
+          <p>Don't have an account? <a href="#" class="auth-link">Request Access</a></p>
+          <p class="text-xs text-muted">By signing in, you agree to our <a href="../pages/terms.html" class="auth-link">Terms of Service</a> and <a href="../pages/privacy.html" class="auth-link">Privacy Policy</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Container Styles -->
+  <style>
+    .auth-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      background: var(--color-bg-primary);
+    }
+
+    .auth-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-12);
+    }
+
+    .auth-panel-left {
+      background: var(--gradient-dark);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .auth-panel-right {
+      background: var(--color-bg-primary);
+    }
+
+    .auth-branding {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .logo-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: var(--font-weight-bold);
+      color: white;
+    }
+
+    .logo-text {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    .brand-tagline {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .brand-description {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      max-width: 400px;
+    }
+
+    .auth-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-success-light);
+    }
+
+    .auth-form-container {
+      width: 100%;
+      max-width: 400px;
+      animation: fadeInUp var(--transition-smooth) ease-out;
+    }
+
+    .form-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .form-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .form-subtitle {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+
+    .auth-form {
+      margin-bottom: var(--space-8);
+    }
+
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-link {
+      color: var(--color-primary);
+      font-size: var(--font-size-sm);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .form-link:hover {
+      color: var(--color-primary-light);
+    }
+
+    .alert {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      font-size: var(--font-size-sm);
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--color-error-light);
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--color-success-light);
+    }
+
+    .alert-icon {
+      font-weight: bold;
+    }
+
+    .form-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin: var(--space-8) 0;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+
+    .form-divider::before,
+    .form-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .social-auth {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .social-auth-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-lg);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      transition: all var(--transition-base);
+    }
+
+    .social-auth-btn:hover {
+      background: var(--color-bg-tertiary);
+      border-color: var(--color-border);
+    }
+
+    .social-auth-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+
+    .auth-footer p {
+      margin-bottom: var(--space-3);
+    }
+
+    .auth-footer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .auth-link {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .auth-link:hover {
+      color: var(--color-primary-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .auth-container {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-panel-left {
+        display: none;
+      }
+
+      .auth-panel {
+        padding: var(--space-6);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .auth-panel {
+        padding: var(--space-4);
+      }
+
+      .auth-form-container {
+        max-width: 100%;
+      }
+
+      .social-auth {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <!-- Firebase Config & Auth Script -->
   <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
 </body>
 </html>
