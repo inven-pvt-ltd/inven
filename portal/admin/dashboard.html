@@ -431,27 +431,23 @@
                 <div class="kpi-cards">
                     <div class="kpi-card" onclick="alert('Total Clients details coming soon!')">
                         <div class="kpi-title">Total Clients</div>
-                        <div class="kpi-value" id="kpi-total-clients">128</div>
-                        <div class="kpi-trend">&#9650; 4% this month</div>
-                        <!-- TODO: Load total clients from Firebase Firestore -->
+                        <div class="kpi-value" id="kpi-total-clients">0</div>
+                        <div class="kpi-trend"></div>
                     </div>
                     <div class="kpi-card" onclick="alert('Active Projects details coming soon!')">
                         <div class="kpi-title">Active Projects</div>
-                        <div class="kpi-value" id="kpi-active-projects">23</div>
-                        <div class="kpi-trend">&#9650; 2 new</div>
-                        <!-- TODO: Load active projects from Firestore -->
+                        <div class="kpi-value" id="kpi-active-projects">0</div>
+                        <div class="kpi-trend"></div>
                     </div>
                     <div class="kpi-card" onclick="alert('Revenue details coming soon!')">
                         <div class="kpi-title">Revenue</div>
-                        <div class="kpi-value" id="kpi-revenue">$12,500</div>
-                        <div class="kpi-trend">&#9650; 8% this month</div>
-                        <!-- TODO: Load revenue from Firestore -->
+                        <div class="kpi-value" id="kpi-revenue">₹0</div>
+                        <div class="kpi-trend"></div>
                     </div>
                     <div class="kpi-card kpi-danger" onclick="alert('Open Tickets details coming soon!')">
                         <div class="kpi-title">Open Tickets</div>
-                        <div class="kpi-value" id="kpi-open-tickets">7</div>
-                        <div class="kpi-trend">&#9660; 1 closed</div>
-                        <!-- TODO: Load open tickets from Firestore -->
+                        <div class="kpi-value" id="kpi-open-tickets">0</div>
+                        <div class="kpi-trend"></div>
                     </div>
                 </div>
                 <div class="dashboard-row">
@@ -460,31 +456,8 @@
                         <div class="timeline-title">Recent Activity</div>
                         <ul class="timeline-list" id="timeline-list">
                             <li class="timeline-item">
-                                <span class="timeline-dot"></span>
                                 <div class="timeline-content">
-                                    <div class="timeline-desc"><b>Jane Doe</b> created <b>Project Apollo</b></div>
-                                    <div class="timeline-time">5 mins ago</div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <span class="timeline-dot"></span>
-                                <div class="timeline-content">
-                                    <div class="timeline-desc"><b>Invoice #1045</b> sent to <b>Acme Corp</b></div>
-                                    <div class="timeline-time">30 mins ago</div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <span class="timeline-dot"></span>
-                                <div class="timeline-content">
-                                    <div class="timeline-desc"><b>File "specs.pdf"</b> uploaded to <b>Project Nova</b></div>
-                                    <div class="timeline-time">1 hr ago</div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <span class="timeline-dot"></span>
-                                <div class="timeline-content">
-                                    <div class="timeline-desc"><b>Support ticket</b> closed by <b>Admin</b></div>
-                                    <div class="timeline-time">2 hrs ago</div>
+                                    <div class="timeline-desc">No recent activity yet.</div>
                                 </div>
                             </li>
                         </ul>
@@ -517,52 +490,7 @@
                             </thead>
                             <tbody id="projects-table">
                                 <tr>
-                                    <td>Apollo</td>
-                                    <td>Acme Corp</td>
-                                    <td>
-                                        <div class="progress-bar-bg">
-                                            <div class="progress-bar" style="width: 75%"></div>
-                                        </div>
-                                        75%
-                                    </td>
-                                    <td><span class="status active">Active</span></td>
-                                    <td>2024-07-15</td>
-                                </tr>
-                                <tr>
-                                    <td>Nova</td>
-                                    <td>Globex Inc</td>
-                                    <td>
-                                        <div class="progress-bar-bg">
-                                            <div class="progress-bar" style="width: 100%"></div>
-                                        </div>
-                                        100%
-                                    </td>
-                                    <td><span class="status completed">Completed</span></td>
-                                    <td>2024-06-30</td>
-                                </tr>
-                                <tr>
-                                    <td>Orion</td>
-                                    <td>Stark LLC</td>
-                                    <td>
-                                        <div class="progress-bar-bg">
-                                            <div class="progress-bar" style="width: 48%"></div>
-                                        </div>
-                                        48%
-                                    </td>
-                                    <td><span class="status paused">Paused</span></td>
-                                    <td>2024-08-09</td>
-                                </tr>
-                                <tr>
-                                    <td>Helios</td>
-                                    <td>Wayne Enterprises</td>
-                                    <td>
-                                        <div class="progress-bar-bg">
-                                            <div class="progress-bar" style="width: 30%"></div>
-                                        </div>
-                                        30%
-                                    </td>
-                                    <td><span class="status overdue">Overdue</span></td>
-                                    <td>2024-06-10</td>
+                                    <td colspan="5" style="text-align:center;">No projects available.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -576,31 +504,8 @@
                     <div class="notifications-title">Notifications</div>
                     <ul class="notifications-list" id="notifications-list">
                         <li class="notification-item">
-                            <span class="notification-icon">&#x1F514;</span>
                             <div class="notification-content">
-                                <div class="notification-text"><b>Payment received</b> from Acme Corp</div>
-                                <div class="notification-time">Just now</div>
-                            </div>
-                        </li>
-                        <li class="notification-item">
-                            <span class="notification-icon">&#x26A0;&#xFE0F;</span>
-                            <div class="notification-content">
-                                <div class="notification-text"><b>Project Helios</b> is overdue</div>
-                                <div class="notification-time">1 hr ago</div>
-                            </div>
-                        </li>
-                        <li class="notification-item">
-                            <span class="notification-icon">&#x1F4E2;</span>
-                            <div class="notification-content">
-                                <div class="notification-text"><b>New client</b> registered: Stark LLC</div>
-                                <div class="notification-time">3 hrs ago</div>
-                            </div>
-                        </li>
-                        <li class="notification-item">
-                            <span class="notification-icon">&#x1F4C8;</span>
-                            <div class="notification-content">
-                                <div class="notification-text"><b>Revenue up</b> 8% this month</div>
-                                <div class="notification-time">Yesterday</div>
+                                <div class="notification-text">No notifications yet.</div>
                             </div>
                         </li>
                     </ul>
@@ -609,10 +514,6 @@
             </aside>
         </div>
     </main>
-    <script>
-        // Placeholder actions for quick action buttons and KPI cards
-        // TODO: Replace with real implementation and data loading from Firebase Auth/Firestore
-        // Example: document.getElementById('kpi-total-clients').textContent = fetchFromFirestore(...)
-    </script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

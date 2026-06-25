@@ -355,19 +355,19 @@
             <section class="kpi-cards">
                 <div class="kpi-card">
                     <div class="kpi-label">Total Clients</div>
-                    <div class="kpi-value" id="kpi-total">42</div>
+                    <div class="kpi-value" id="kpi-total">0</div>
                 </div>
                 <div class="kpi-card active">
                     <div class="kpi-label">Active Clients</div>
-                    <div class="kpi-value" id="kpi-active">31</div>
+                    <div class="kpi-value" id="kpi-active">0</div>
                 </div>
                 <div class="kpi-card pending">
                     <div class="kpi-label">Pending Onboarding</div>
-                    <div class="kpi-value" id="kpi-pending">6</div>
+                    <div class="kpi-value" id="kpi-pending">0</div>
                 </div>
                 <div class="kpi-card enterprise">
                     <div class="kpi-label">Enterprise Clients</div>
-                    <div class="kpi-value" id="kpi-enterprise">5</div>
+                    <div class="kpi-value" id="kpi-enterprise">0</div>
                 </div>
             </section>
             <section class="toolbar">
@@ -391,88 +391,7 @@
                         </tr>
                     </thead>
                     <tbody id="clients-tbody">
-                        <!-- Placeholder rows -->
-                        <tr>
-                            <td>Jane Doe</td>
-                            <td>Acme Inc.</td>
-                            <td>jane@acme.com</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>3</td>
-                            <td>2023-07-15</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
-                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
-                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
-                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>John Smith</td>
-                            <td>BetaSoft</td>
-                            <td>john@betasoft.com</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>0</td>
-                            <td>2024-01-03</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
-                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
-                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
-                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mary Lee</td>
-                            <td>EnterpriseX</td>
-                            <td>mary@enterprisex.com</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>7</td>
-                            <td>2022-11-21</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
-                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
-                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
-                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Alex Kim</td>
-                            <td>Gamma LLC</td>
-                            <td>alex@gammallc.com</td>
-                            <td><span class="status-badge status-inactive">Inactive</span></td>
-                            <td>0</td>
-                            <td>2023-03-09</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
-                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
-                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
-                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Priya Patel</td>
-                            <td>Delta Partners</td>
-                            <td>priya@deltapartners.com</td>
-                            <td><span class="status-badge status-pending">Pending</span></td>
-                            <td>1</td>
-                            <td>2024-04-10</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="action-btn view" title="View"><span>&#128065;</span></button>
-                                    <button class="action-btn edit" title="Edit"><span>&#9998;</span></button>
-                                    <button class="action-btn reset" title="Reset Password"><span>&#128274;</span></button>
-                                    <button class="action-btn delete" title="Delete"><span>&#128465;</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- More placeholder rows as needed -->
+                        <!-- Populated dynamically -->
                     </tbody>
                 </table>
             </section>
@@ -490,47 +409,7 @@
             </div>
         </main>
     </div>
-    <script>
-        // Simple search filter for clients table
-        document.getElementById('client-search').addEventListener('input', function() {
-            const filter = this.value.trim().toLowerCase();
-            const rows = document.querySelectorAll('#clients-tbody tr');
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
-        });
-
-        // Modal/Slide-over for Create Client
-        const modalBackdrop = document.getElementById('modal-backdrop');
-        document.getElementById('create-client-btn').addEventListener('click', function() {
-            modalBackdrop.style.display = 'flex';
-        });
-        document.getElementById('close-modal-btn').addEventListener('click', function() {
-            modalBackdrop.style.display = 'none';
-        });
-        // Close modal on backdrop click
-        modalBackdrop.addEventListener('click', function(e) {
-            if (e.target === modalBackdrop) modalBackdrop.style.display = 'none';
-        });
-
-        // Placeholder alerts for actions
-        document.querySelectorAll('.action-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                let action = btn.classList.contains('view') ? 'View'
-                    : btn.classList.contains('edit') ? 'Edit'
-                    : btn.classList.contains('reset') ? 'Reset Password'
-                    : btn.classList.contains('delete') ? 'Delete'
-                    : 'Action';
-                let client = btn.closest('tr').querySelector('td').innerText;
-                alert(`${action} for ${client} (TODO: Implement action and Firebase integration)`);
-            });
-        });
-
-        // TODO: Replace static table with dynamic Firestore data.
-        // TODO: Integrate Firebase Auth for client account creation and management.
-        // TODO: Implement modals for view/edit/reset password/delete with real data.
-    </script>
+    <script src="js/clients.js"></script>
+        
 </body>
 </html>

@@ -388,14 +388,42 @@
                 return;
             }
 
-            // TODO: Integrate with Firebase Authentication to create user with email and temporary password.
-            // TODO: Create client profile in Firestore with all the above details.
-            // TODO: Assign project to client automatically.
-            // TODO: Send welcome email if sendWelcome is true.
-
-            // Placeholder for success
-            alert('Client account created successfully! (Integration with Firebase/Auth/Firestore is pending.)');
-            this.reset();
+            // Create client profile and project in Firestore (do NOT create Auth user from client side)
+            (async () => {
+                try {
+                    // Get Firestore reference (assume window.firebaseDb is initialized)
+                    const clientRef = window.firebaseDb.collection('users').doc();
+                    await clientRef.set({
+                        name: fullName,
+                        company: companyName,
+                        email: email,
+                        phone: phone,
+                        role: 'client',
+                        plan: plan,
+                        notes: notes,
+                        requirePasswordChange: requirePasswordChange,
+                        sendWelcome: sendWelcome,
+                        projectName: projectName,
+                        status: 'pending_credentials',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    // Create project document for this client
+                    await window.firebaseDb.collection('projects').add({
+                        clientId: clientRef.id,
+                        clientName: fullName,
+                        projectName: projectName,
+                        status: 'active',
+                        progress: 0,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    alert('Client profile and project created successfully. Create the Authentication user separately or via a secure backend.');
+                    this.reset();
+                } catch (err) {
+                    errorMsg.textContent = 'Error creating client: ' + (err && err.message ? err.message : err);
+                    errorMsg.style.display = 'block';
+                    console.error('Error creating client:', err);
+                }
+            })();
         });
     </script>
 </body>

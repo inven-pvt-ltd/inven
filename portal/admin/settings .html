@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -368,14 +366,6 @@
       </div>
     </section>
   </div>
-  <script>
-    // Intercept all Save buttons to show an alert
-    document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Settings saved locally. Connect Firebase to persist changes.');
-      });
-    });
-  </script>
+  <script src="js/settings.js"></script>
 </body>
 </html>

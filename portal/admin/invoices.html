@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -367,18 +365,18 @@
     <div class="summary-cards">
       <div class="summary-card">
         <div class="label">Total Revenue</div>
-        <div class="value">$18,230</div>
+        <div class="value" id="total-revenue">₹0</div>
         <div class="sub">All time</div>
       </div>
       <div class="summary-card">
         <div class="label">Outstanding Invoices</div>
-        <div class="value">$3,150</div>
-        <div class="sub">5 invoices</div>
+        <div class="value" id="outstanding-revenue">₹0</div>
+        <div class="sub">Pending amount</div>
       </div>
       <div class="summary-card">
         <div class="label">Paid This Month</div>
-        <div class="value">$2,400</div>
-        <div class="sub">June 2024</div>
+        <div class="value" id="paid-month">₹0</div>
+        <div class="sub">Current month</div>
       </div>
     </div>
     <div class="toolbar">
@@ -402,90 +400,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>#INV-1001</td>
-            <td>Acme Corp</td>
-            <td>Website Revamp</td>
-            <td>$1,200</td>
-            <td><span class="status-pill status-paid">Paid</span></td>
-            <td>2024-05-20</td>
-            <td>
-              <button class="action-btn view" onclick="alert('View Invoice #INV-1001 (TODO: implement view modal)')">👁️ View</button>
-              <button class="action-btn download" onclick="alert('Download Invoice #INV-1001 (TODO: implement download)')">⬇️ Download</button>
-            </td>
-          </tr>
-          <tr>
-            <td>#INV-1002</td>
-            <td>Beta LLC</td>
-            <td>App Design</td>
-            <td>$950</td>
-            <td><span class="status-pill status-pending">Pending</span></td>
-            <td>2024-06-10</td>
-            <td>
-              <button class="action-btn view" onclick="alert('View Invoice #INV-1002 (TODO: implement view modal)')">👁️ View</button>
-              <button class="action-btn download" onclick="alert('Download Invoice #INV-1002 (TODO: implement download)')">⬇️ Download</button>
-              <button class="action-btn markpaid" onclick="alert('Mark Invoice #INV-1002 as Paid (TODO: implement status update)')">✔️ Mark Paid</button>
-            </td>
-          </tr>
-          <tr>
-            <td>#INV-1003</td>
-            <td>Gamma Inc</td>
-            <td>SEO Audit</td>
-            <td>$600</td>
-            <td><span class="status-pill status-overdue">Overdue</span></td>
-            <td>2024-05-30</td>
-            <td>
-              <button class="action-btn view" onclick="alert('View Invoice #INV-1003 (TODO: implement view modal)')">👁️ View</button>
-              <button class="action-btn download" onclick="alert('Download Invoice #INV-1003 (TODO: implement download)')">⬇️ Download</button>
-              <button class="action-btn markpaid" onclick="alert('Mark Invoice #INV-1003 as Paid (TODO: implement status update)')">✔️ Mark Paid</button>
-            </td>
-          </tr>
-          <tr>
-            <td>#INV-1004</td>
-            <td>Acme Corp</td>
-            <td>Logo Design</td>
-            <td>$400</td>
-            <td><span class="status-pill status-paid">Paid</span></td>
-            <td>2024-06-01</td>
-            <td>
-              <button class="action-btn view" onclick="alert('View Invoice #INV-1004 (TODO: implement view modal)')">👁️ View</button>
-              <button class="action-btn download" onclick="alert('Download Invoice #INV-1004 (TODO: implement download)')">⬇️ Download</button>
-            </td>
-          </tr>
-          <tr>
-            <td>#INV-1005</td>
-            <td>Delta Co</td>
-            <td>Maintenance</td>
-            <td>$1,000</td>
-            <td><span class="status-pill status-pending">Pending</span></td>
-            <td>2024-06-25</td>
-            <td>
-              <button class="action-btn view" onclick="alert('View Invoice #INV-1005 (TODO: implement view modal)')">👁️ View</button>
-              <button class="action-btn download" onclick="alert('Download Invoice #INV-1005 (TODO: implement download)')">⬇️ Download</button>
-              <button class="action-btn markpaid" onclick="alert('Mark Invoice #INV-1005 as Paid (TODO: implement status update)')">✔️ Mark Paid</button>
-            </td>
-          </tr>
+          <tr><td colspan="7" style="text-align:center;">No invoices available.</td></tr>
         </tbody>
       </table>
     </div>
   </div>
-  <script>
-    // TODO: Integrate Firebase/Firestore to load, filter, and manage invoices dynamically.
-    document.getElementById('invoice-search').addEventListener('input', function(e) {
-      const query = e.target.value.toLowerCase();
-      const rows = document.querySelectorAll('#invoice-table tbody tr');
-      rows.forEach(row => {
-        let match = false;
-        row.querySelectorAll('td').forEach(td => {
-          if (td.innerText.toLowerCase().includes(query)) match = true;
-        });
-        row.style.display = match ? '' : 'none';
-      });
-    });
-    document.getElementById('create-invoice-btn').addEventListener('click', function() {
-      alert('Create Invoice (TODO: implement invoice creation modal & Firestore integration)');
-    });
-    // TODO: Replace placeholder alerts with actual modals and Firestore actions.
-  </script>
+  <script src="js/invoices.js"></script>
 </body>
 </html>

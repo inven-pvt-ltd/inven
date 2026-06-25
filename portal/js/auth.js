@@ -49,7 +49,11 @@ class AuthManager {
             sessionStorage.setItem('portal_user', JSON.stringify(this.user));
           }
 
-          window.location.href = 'dashboard.html';
+          if (this.user.role === 'admin') {
+            window.location.href = 'admin/dashboard.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
         } else {
           this.showError(form, response.error || 'Authentication failed');
         }
@@ -64,27 +68,23 @@ class AuthManager {
    * Mock authentication - Replace with Firebase
    */
   async authenticateUser(email, password) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (email && password.length >= 6) {
-          resolve({
-            success: true,
-            user: {
-              id: '123',
-              email: email,
-              name: email.split('@')[0],
-              role: 'client',
-              avatar: email.charAt(0).toUpperCase()
-            }
-          });
-        } else {
-          resolve({
-            success: false,
-            error: 'Invalid email or password'
-          });
-        }
-      }, 500);
-    });
+    const cred = await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
+    const uid = cred.user.uid;
+    const snap = await window.getDoc(window.doc(window.firebaseDb, 'users', uid));
+    if (!snap.exists()) {
+      throw new Error('User profile not found');
+    }
+    const profile = snap.data();
+    return {
+      success: true,
+      user: {
+        id: uid,
+        email: cred.user.email,
+        name: profile.name || cred.user.email,
+        role: profile.role || 'client',
+        avatar: (profile.name || cred.user.email || 'U').charAt(0).toUpperCase()
+      }
+    };
   }
 
   /**
