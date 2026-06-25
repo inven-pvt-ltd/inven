@@ -407,17 +407,17 @@
         <div class="logo">Inven</div>
         <nav>
             <ul>
-                <li><a class="active" href="#"><span class="icon">&#x1F4C8;</span><span>Dashboard</span></a></li>
-                <li><a href="#"><span class="icon">&#x1F465;</span><span>Clients</span></a></li>
-                <li><a href="#"><span class="icon">&#x1F4C4;</span><span>Projects</span></a></li>
-                <li><a href="#"><span class="icon">&#x1F4C1;</span><span>Files</span></a></li>
-                <li><a href="#"><span class="icon">&#x2709;&#xFE0F;</span><span>Messages</span></a></li>
-                <li><a href="#"><span class="icon">&#x1F4B3;</span><span>Invoices</span></a></li>
+                <li><a class="active" href="dashboard.html"><span class="icon">&#x1F4C8;</span><span>Dashboard</span></a></li>
+                <li><a href="clients.html"><span class="icon">&#x1F465;</span><span>Clients</span></a></li>
+                <li><a href="projects.html"><span class="icon">&#x1F4C4;</span><span>Projects</span></a></li>
+                <li><a href="files.html"><span class="icon">&#x1F4C1;</span><span>Files</span></a></li>
+                <li><a href="messages.html"><span class="icon">&#x2709;&#xFE0F;</span><span>Messages</span></a></li>
+                <li><a href="invoices.html"><span class="icon">&#x1F4B3;</span><span>Invoices</span></a></li>
             </ul>
         </nav>
         <div class="settings">
             <ul>
-                <li><a href="#"><span class="icon">&#9881;&#65039;</span><span>Settings</span></a></li>
+                <li><a href="settings.html"><span class="icon">&#9881;&#65039;</span><span>Settings</span></a></li>
             </ul>
         </div>
     </aside>
@@ -429,22 +429,22 @@
             <section class="dashboard-main">
                 <!-- KPI Cards -->
                 <div class="kpi-cards">
-                    <div class="kpi-card" onclick="alert('Total Clients details coming soon!')">
+                    <div class="kpi-card" onclick="window.location.href='clients.html'">
                         <div class="kpi-title">Total Clients</div>
                         <div class="kpi-value" id="kpi-total-clients">0</div>
                         <div class="kpi-trend"></div>
                     </div>
-                    <div class="kpi-card" onclick="alert('Active Projects details coming soon!')">
+                    <div class="kpi-card" onclick="window.location.href='projects.html'">
                         <div class="kpi-title">Active Projects</div>
                         <div class="kpi-value" id="kpi-active-projects">0</div>
                         <div class="kpi-trend"></div>
                     </div>
-                    <div class="kpi-card" onclick="alert('Revenue details coming soon!')">
+                    <div class="kpi-card" onclick="window.location.href='invoices.html'">
                         <div class="kpi-title">Revenue</div>
                         <div class="kpi-value" id="kpi-revenue">₹0</div>
                         <div class="kpi-trend"></div>
                     </div>
-                    <div class="kpi-card kpi-danger" onclick="alert('Open Tickets details coming soon!')">
+                    <div class="kpi-card kpi-danger" onclick="window.location.href='messages.html'">
                         <div class="kpi-title">Open Tickets</div>
                         <div class="kpi-value" id="kpi-open-tickets">0</div>
                         <div class="kpi-trend"></div>
@@ -467,10 +467,10 @@
                     <div class="quick-actions">
                         <div class="quick-actions-title">Quick Actions</div>
                         <div class="quick-actions-list">
-                            <button class="quick-action-btn" onclick="alert('Create Client action coming soon!')">&#x2795; Create Client</button>
-                            <button class="quick-action-btn" onclick="alert('New Project action coming soon!')">&#x1F4C4; New Project</button>
-                            <button class="quick-action-btn" onclick="alert('Upload File action coming soon!')">&#x1F4C1; Upload File</button>
-                            <button class="quick-action-btn" onclick="alert('Send Invoice action coming soon!')">&#x1F4B3; Send Invoice</button>
+                            <button class="quick-action-btn" onclick="window.location.href='create_clients.html'">&#x2795; Create Client</button>
+                            <button class="quick-action-btn" onclick="window.location.href='projects.html'">&#x1F4C4; New Project</button>
+                            <button class="quick-action-btn" onclick="window.location.href='files.html'">&#x1F4C1; Upload File</button>
+                            <button class="quick-action-btn" onclick="window.location.href='invoices.html'">&#x1F4B3; Send Invoice</button>
                         </div>
                     </div>
                 </div>

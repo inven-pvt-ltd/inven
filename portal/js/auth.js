@@ -49,9 +49,12 @@ class AuthManager {
             sessionStorage.setItem('portal_user', JSON.stringify(this.user));
           }
 
-          if (this.user.role === 'admin') {
+          console.log('Authenticated user object:', this.user);
+          if ((this.user.role || '').toLowerCase().trim() === 'admin') {
+            console.log('Redirecting to ADMIN dashboard');
             window.location.href = 'admin/dashboard.html';
           } else {
+            console.log('Redirecting to CLIENT dashboard');
             window.location.href = 'dashboard.html';
           }
         } else {
@@ -75,6 +78,10 @@ class AuthManager {
       throw new Error('User profile not found');
     }
     const profile = snap.data();
+    console.log('=== LOGIN DEBUG ===');
+    console.log('Firebase UID:', uid);
+    console.log('Firestore profile:', profile);
+    console.log('Role from Firestore:', profile?.role);
     return {
       success: true,
       user: {
