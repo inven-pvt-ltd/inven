@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INVEN | Live Demo</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo.png">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      color: #f4f4f4;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      min-height: 100vh;
+    }
+    #particleCanvas {
+      position: fixed;
+      z-index: -1;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+    main {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 140px);
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+    }
+    .hero-card {
+      background: rgba(29, 33, 41, 0.67);
+      box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18);
+      border-radius: 22px;
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      max-width: 440px;
+      text-align: center;
+      backdrop-filter: blur(7px);
+      margin-bottom: 2.5rem;
+    }
+    .hero-card h1 {
+      font-size: 2.3rem;
+      margin: 0 0 1.1rem 0;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .hero-card p {
+      font-size: 1.1rem;
+      color: #c3cbe5;
+      margin-bottom: 2rem;
+    }
+    .button-group {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .button-group a {
+      display: inline-block;
+      padding: 0.85rem 2.1rem;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #1fb6ff 0%, #009eeb 100%);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.08rem;
+      text-decoration: none;
+      box-shadow: 0 2px 12px 0 rgba(31,182,255,0.12);
+      transition: background 0.15s, transform 0.13s;
+    }
+    .button-group a.secondary {
+      background: rgba(255,255,255,0.05);
+      color: #b9e5ff;
+      border: 1.5px solid #2a7bbd;
+      box-shadow: none;
+      font-weight: 500;
+    }
+    .button-group a:hover, .button-group a:focus {
+      background: linear-gradient(90deg, #009eeb 0%, #1fb6ff 100%);
+      color: #fff;
+      transform: translateY(-2px) scale(1.045);
+    }
+    .button-group a.secondary:hover, .button-group a.secondary:focus {
+      background: #1a2336;
+      color: #8fd6ff;
+      border-color: #1fb6ff;
+    }
+    .demo-preview-card {
+      margin: 0 auto;
+      margin-top: 2.3rem;
+      background: rgba(20, 24, 32, 0.74);
+      border-radius: 18px;
+      box-shadow: 0 6px 28px 0 rgba(0,0,0,0.13);
+      max-width: 650px;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+      color: #7ec3ff;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      text-align: center;
+      padding: 3.5rem 2.5rem;
+      backdrop-filter: blur(5px);
+    }
+    footer {
+      z-index: 2;
+      position: relative;
+      text-align: center;
+      color: #8ca0b6;
+      padding: 2.4rem 0 1.1rem 0;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+      background: transparent;
+      width: 100%;
+    }
+    @media (max-width: 600px) {
+      main {
+        padding-top: 7rem;
+        padding-bottom: 3rem;
+      }
+      .hero-card {
+        padding: 1.3rem 0.7rem 1.1rem 0.7rem;
+        max-width: 98vw;
+      }
+      .demo-preview-card {
+        padding: 2.1rem 0.7rem;
+        font-size: 1.07rem;
+        min-height: 120px;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <nav class="navbar"><div class="logo">INVEN<span>.</span></div><ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="aboutus.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="../portal/login.html">Client Portal</a></li></ul></nav>
+  <main>
+    <div class="hero-card">
+      <h1>Experience INVEN in Action</h1>
+      <p>See a live demonstration of our innovative platform. Explore the features, performance, and interactive capabilities that set INVEN apart.</p>
+      <div class="button-group">
+        <a href="contact.html">Request Demo</a>
+        <a href="../index.html" class="secondary">Back to Home</a>
+      </div>
+    </div>
+    <div class="demo-preview-card">
+      Interactive product showcase coming soon
+    </div>
+  </main>
+  <footer>
+    &copy; INVEN
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>

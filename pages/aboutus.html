@@ -16,82 +16,148 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-pap2uAqU1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* About Us Page Specific Styles */
-        .who-we-are-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+        /* New About Content Styles */
+        .aboutus-content-area {
+            background: transparent;
+            padding: 140px 0 0 0;
+            position: relative;
+            z-index: 1;
+        }
+        .aboutus-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 6%;
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
-        .who-we-are-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .aboutus-main h1 {
+            color: #fff;
+            font-size: clamp(2.7rem, 6vw, 4.2rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1.1rem;
+            text-align: center;
         }
-        .who-we-are-images img {
+        .aboutus-main .aboutus-lead {
+            font-size: 1.3rem;
+            max-width: 600px;
+            text-align: center;
+            color: #e1e6eb;
+            margin-bottom: 2.2rem;
+            line-height: 1.7;
+        }
+        .aboutus-img-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.7rem;
+            margin: 2.1rem 0 2.4rem 0;
             width: 100%;
-            height: 220px;
+            max-width: 1100px;
+        }
+        .aboutus-img-row img {
+            width: 100%;
+            aspect-ratio: 4/3;
             object-fit: cover;
             border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 26px rgba(0,0,0,0.13);
+            border: none;
+            background: none;
         }
-        @media (max-width: 768px) {
-            .who-we-are-layout {
+        .aboutus-mission {
+            font-size: 1.22rem;
+            color: #fff;
+            text-align: center;
+            font-weight: 600;
+            background: transparent;
+            border-radius: 18px;
+            padding: 1.7rem 1.2rem 1.5rem;
+            margin-bottom: 2.7rem;
+            margin-top: 0.5rem;
+            box-shadow: none;
+            max-width: 650px;
+        }
+        .aboutus-stats-card {
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 22px;
+            box-shadow: none;
+            padding: 2.3rem 2.1rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto 3.5rem;
+        }
+        .aboutus-stat {
+            text-align: center;
+            padding: 0 0.5rem;
+        }
+        .aboutus-stat .stat-number {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.2rem;
+            display: block;
+        }
+        .aboutus-stat .stat-label {
+            font-size: 1.08rem;
+            color: #e1e6eb;
+            opacity: 0.93;
+            font-weight: 500;
+        }
+        @media (max-width: 900px) {
+            .aboutus-img-row {
+                gap: 1rem;
+                max-width: 98vw;
+            }
+            .aboutus-stats-card {
+                padding: 1.4rem 0.7rem;
+                gap: 0.7rem;
+                max-width: 98vw;
+            }
+            .aboutus-main {
+                max-width: 98vw;
+            }
+        }
+        @media (max-width: 700px) {
+            .aboutus-img-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                max-width: 100vw;
+            }
+            .aboutus-main h1 {
+                font-size: 2.2rem;
+            }
+            .aboutus-main .aboutus-lead {
+                font-size: 1.07rem;
+            }
+            .aboutus-mission {
+                font-size: 1.06rem;
+                padding: 1.2rem 0.7rem 1rem;
+            }
+            .aboutus-stats-card {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .aboutus-img-row {
+                grid-template-columns: 1fr;
+            }
+            .aboutus-stats-card {
                 grid-template-columns: 1fr;
             }
         }
         body {
-            background: #0a0c10;
+            background: transparent;
         }
-        .about-hero {
-            position: relative;
-        }
-        .about-hero::before {
-            content: "";
-            position: absolute;
+        #particleCanvas {
+            position: fixed;
             inset: 0;
-            background: linear-gradient(90deg, rgba(0,255,204,0.05), transparent 60%);
-            pointer-events: none;
-        }
-        .hero-text h1 {
-            font-size: clamp(3rem, 7vw, 5.5rem);
-            line-height: 1.05;
-            margin-bottom: 1rem;
-        }
-        .subtitle {
-            font-size: 1.25rem;
-            max-width: 42rem;
-            color: #b8c5d6;
-        }
-        .about-hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 10% 80px;
-        }
-        .hero-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-        }
-        .hero-text {
-            flex: 1;
-        }
-        .hero-image {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            max-width: 520px;
-        }
-        .hero-image img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            animation: floatY 5s ease-in-out infinite;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
         .about-section,
         .core-values-section,
@@ -101,6 +167,14 @@
         .about-section {
             max-width: 1100px;
             margin: 0 auto;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        .core-values-section {
+            background: transparent;
+            position: relative;
+            z-index: 1;
         }
         .about-section p {
             font-size: 1.15rem;
@@ -123,16 +197,62 @@
             0%,100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
         }
-        @keyframes ambientBackground {
-            0% {
-                background-position: 0% 0%, 100% 0%, 50% 100%;
-            }
-            50% {
-                background-position: 20% 10%, 80% 20%, 45% 80%;
-            }
-            100% {
-                background-position: 10% 30%, 90% 10%, 55% 90%;
-            }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 1.8rem;
+            max-width: 1150px;
+            margin: 3rem auto 0;
+            justify-items: center;
+        }
+        .team-card {
+            background: rgba(13,15,19,0.82);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 28px;
+            padding: 2rem;
+            min-height: 520px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .team-card::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            right: 0;
+            bottom: 0;
+            background: rgba(13,15,19,0.82);
+            border-bottom-right-radius: 24px;
+            border-left: 1.5px solid rgba(255,255,255,0.07);
+            border-top: 1.5px solid rgba(255,255,255,0.07);
+            transform: rotate(45deg) translate(29px, 29px);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .team-card h3 {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0;
+        }
+        .team-card h4 {
+            margin-top: .5rem;
+            color: #b9c1cb;
+            font-weight: 500;
+        }
+        .team-photo {
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-top: 2rem;
+        }
+        .team-photo img {
+            width: 85%;
+            max-width: 320px;
+            height: auto;
+            object-fit: contain;
         }
         .core-values-cards {
             display: flex;
@@ -250,34 +370,23 @@
             text-align: center;
             text-decoration: none;
             box-shadow: 0 2px 18px 0 rgba(0,255,204,0.10);
-            transition: transform 0.18s cubic-bezier(.4,2,.3,1), box-shadow 0.18s;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
         }
         .cta-button:hover,
         .cta-button:focus {
-            transform: translateY(-5px) scale(1.03);
+            transform: translateY(-3px);
             box-shadow: 0 6px 28px 0 rgba(0,255,204,0.20);
             color: #0a0d13;
+            filter: brightness(1.03);
         }
         @media (max-width: 768px) {
-            .about-hero {
-                padding: 90px 6% 50px;
-            }
-            .hero-content {
-                flex-direction: column;
-                align-items: center;
-                gap: 2.2rem;
-                text-align: center;
-            }
-            .hero-image {
-                max-width: 100%;
-            }
-            .hero-image img {
-                height: 140px;
-            }
             .about-section,
             .core-values-section,
             .by-the-numbers-section {
                 padding: 60px 5%;
+            }
+            .aboutus-content-area {
+                padding: 120px 0 0 0;
             }
         }
         .core-value-card img {
@@ -314,74 +423,134 @@
             line-height: 1.8;
             color: #c8d2df;
         }
+    /* Navbar highlight matching site theme */
+    .nav-links a {
+        position: relative;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #00ffd0, #0099ff);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+        transform: scaleX(1);
+    }
+
+    .nav-links a.active::after {
+        transform: scaleX(0);
+    }
+
+    .nav-links a.active {
+        color: inherit;
+    }
+    .commitment-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 2.2rem;
+    }
+    .secondary-button {
+        background: linear-gradient(135deg, #ff3b30, #d70015);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 10px 24px rgba(255,59,48,0.25);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+    .secondary-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 32px rgba(255,59,48,0.35);
+        filter: brightness(1.08);
+    }
     </style>
 </head>
 
 <body>
+    <canvas id="particleCanvas"></canvas>
     <!-- Navbar -->
-    <nav class="navbar fixed-navbar">
-        <div class="navbar-container">
-            <a href="../index.html" class="navbar-logo">INVEN<span class="dot">.</span></a>
-            <ul class="navbar-links">
-                <li><a href="../index.html"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="aboutus.html" class="active"><i class="fa fa-users"></i> About Us</a></li>
-                <li><a href="contact.html"><i class="fa fa-envelope"></i> Contact</a></li>
-            </ul>
+    <nav class="navbar">
+        <div class="logo">INVEN<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="aboutus.html" class="active">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="../portal/login.html" class="client-portal-link">Client Portal</a></li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero about-hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>About INVEN</h1>
-                <p class="subtitle">Premium web development and robust server infrastructure, built for reliability, scalability, and modern digital needs.</p>
-            </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop" alt="Placeholder 1">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop" alt="Placeholder 2">
-                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop" alt="Placeholder 3">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop" alt="Placeholder 4">
-            </div>
+    <!-- New About Us Section -->
+    <section class="aboutus-content-area">
+      <div class="aboutus-main">
+        <h1>About INVEN</h1>
+        <div class="aboutus-lead">
+          Premium websites and scalable infrastructure, built for modern business.
         </div>
-    </section>
-
-    <!-- Who We Are -->
-    <section class="about-section">
-        <h2>Who We Are</h2>
-        <div class="who-we-are-layout">
-          <div class="who-we-are-images">
-            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=900&auto=format&fit=crop" alt="Office">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop" alt="Team">
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&auto=format&fit=crop" alt="Servers">
-            <img src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?w=900&auto=format&fit=crop" alt="Workspace">
+        <div class="aboutus-img-row">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop" alt="Creative Collaboration">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop" alt="Team at Work">
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop" alt="Modern Servers">
+        </div>
+        <div class="aboutus-mission">
+          We empower businesses to launch faster, perform better, and scale with confidence by combining beautiful design, robust development, and high-performance server infrastructure.
+        </div>
+        <div class="aboutus-stats-card">
+          <div class="aboutus-stat">
+            <span class="stat-number">30+</span>
+            <span class="stat-label">Websites Launched</span>
           </div>
-          <div>
-            <p>INVEN creates premium websites and scalable server infrastructure engineered for speed, security, and reliability. We help businesses establish a modern digital presence while ensuring their backend systems are ready to grow.</p>
-            <p>Our team combines design, development, cloud technologies, and performance optimization to deliver solutions that look exceptional and operate flawlessly. We focus on long-term partnerships and building technology that drives measurable business success.</p>
+          <div class="aboutus-stat">
+            <span class="stat-number">99.99%</span>
+            <span class="stat-label">Uptime Achieved</span>
+          </div>
+          <div class="aboutus-stat">
+            <span class="stat-number">10+ yrs</span>
+            <span class="stat-label">Combined Experience</span>
+          </div>
+          <div class="aboutus-stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Client Satisfaction</span>
           </div>
         </div>
+      </div>
     </section>
 
 
     <!-- Our Team -->
     <section class="core-values-section">
-        <h2>Meet Our Team</h2>
-        <div class="core-values-cards">
-            <div class="core-value-card">
-                <img src="https://picsum.photos/300?random=41" alt="Founder" style="width:220px;height:300px;border-radius:20px;object-fit:cover;margin-bottom:1rem;">
-                <div class="member-info">
+        <h2>Meet the INVEN founders</h2>
+        <p class="aboutus-lead" style="margin-bottom: 0; text-align: center;">The people building premium digital experiences and scalable infrastructure.</p>
+        <div class="team-grid">
+            <div class="team-card">
+                <div>
                     <h3>Om Mate</h3>
                     <h4>Founding Partner</h4>
-                    <p>Co-founded INVEN with a vision to create premium digital experiences, high-performance websites, and scalable server infrastructure that empower businesses to grow.</p>
+                </div>
+                <div class="team-photo">
+                    <img src="https://picsum.photos/500/700?random=41" alt="Om Mate">
                 </div>
             </div>
-            <div class="core-value-card">
-                <img src="https://picsum.photos/300?random=42" alt="Co-Founder" style="width:220px;height:300px;border-radius:20px;object-fit:cover;margin-bottom:1rem;">
-                <div class="member-info">
+            <div class="team-card">
+                <div>
                     <h3>Soham Memon</h3>
                     <h4>Founding Partner</h4>
-                    <p>Co-founded INVEN with a focus on innovation, collaboration, and building reliable technology solutions backed by long-term client relationships and operational excellence.</p>
+                </div>
+                <div class="team-photo">
+                    <img src="https://picsum.photos/500/700?random=42" alt="Soham Memon">
                 </div>
             </div>
         </div>
@@ -393,7 +562,10 @@
         <p>
             At INVEN, we're committed to delivering exceptional results and forging enduring partnerships. Ready to take your project to the next level?
         </p>
-        <a href="contact.html" class="cta-button">Contact Us</a>
+        <div class="commitment-actions">
+            <a href="contact.html" class="cta-button">Contact Us</a>
+            <a href="demo.html" class="cta-button secondary-button">View Demo</a>
+        </div>
     </section>
 
     <!-- Footer -->
