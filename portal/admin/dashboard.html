@@ -10,8 +10,8 @@
     <style>
         :root {
             --bg-main: rgba(24, 26, 32, 0.95);
-            --glass: rgba(36, 39, 48, 0.75);
-            --glass-light: rgba(36, 39, 48, 0.55);
+            --glass: rgba(17,24,39,0.82);
+            --glass-light: rgba(30,41,59,0.72);
             --primary: #6c63ff;
             --accent: #37d67a;
             --danger: #f44336;
@@ -22,14 +22,14 @@
             --sidebar-collapsed: 64px;
             --transition: 0.25s cubic-bezier(.4,0,.2,1);
             --radius: 24px;
-            --shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+            --shadow: 0 16px 40px rgba(0,0,0,0.32);
         }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            background: radial-gradient(circle at top right, rgba(108,99,255,0.18), transparent 35%), radial-gradient(circle at bottom left, rgba(55,214,122,0.12), transparent 30%), #0f172a;
             color: var(--text);
             min-height: 100vh;
         }
@@ -104,7 +104,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 32px 32px 0 32px;
+            padding: 28px 40px 0 40px;
         }
         .header-title {
             font-size: 2rem;
@@ -114,7 +114,7 @@
         .dashboard-wrapper {
             display: flex;
             flex: 1;
-            padding: 24px 32px 32px 32px;
+            padding: 24px 40px 40px 40px;
             gap: 32px;
             min-height: 0;
         }
@@ -140,10 +140,11 @@
             align-items: flex-start;
             min-width: 0;
             cursor: pointer;
-            transition: transform 0.12s, box-shadow 0.12s;
+            transition: transform .25s ease, box-shadow .25s ease;
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .kpi-card:hover {
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-6px) scale(1.02);
             box-shadow: 0 8px 36px 0 rgba(0,0,0,0.22);
         }
         .kpi-title {
@@ -177,6 +178,7 @@
             padding: 24px;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .activity-timeline {
             max-width: 420px;
@@ -224,7 +226,7 @@
         }
         .quick-action-btn {
             flex: 1 1 45%;
-            background: linear-gradient(135deg, var(--primary) 60%, var(--accent) 100%);
+            background: linear-gradient(135deg, #6366f1, #4f8cff);
             color: #fff;
             border: none;
             border-radius: 12px;
@@ -233,18 +235,24 @@
             font-weight: 600;
             margin-bottom: 6px;
             cursor: pointer;
-            transition: background 0.15s, box-shadow 0.15s;
+            transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
             box-shadow: 0 2px 12px 0 rgba(108,99,255,0.15);
         }
         .quick-action-btn:hover {
-            background: linear-gradient(135deg, var(--accent) 40%, var(--primary) 100%);
+            background: linear-gradient(135deg, #4f8cff, #6366f1);
+            transform: translateY(-2px);
         }
         .dashboard-table-card {
-            background: var(--glass-light);
+            background: rgba(255,255,255,0.03);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             padding: 24px;
             margin-top: 0;
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(18px);
+        }
+        tbody tr:hover {
+            background: rgba(108,99,255,0.08);
         }
         .table-title {
             font-size: 1.15rem;
@@ -311,6 +319,7 @@
             min-height: 240px;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .notifications-title {
             font-size: 1.15rem;
@@ -467,7 +476,7 @@
                     <div class="quick-actions">
                         <div class="quick-actions-title">Quick Actions</div>
                         <div class="quick-actions-list">
-                            <button class="quick-action-btn" onclick="window.location.href='create_clients.html'">&#x2795; Create Client</button>
+                            <button class="quick-action-btn" onclick="window.location.href='clients.html'">&#x2795; Create Client</button>
                             <button class="quick-action-btn" onclick="window.location.href='projects.html'">&#x1F4C4; New Project</button>
                             <button class="quick-action-btn" onclick="window.location.href='files.html'">&#x1F4C1; Upload File</button>
                             <button class="quick-action-btn" onclick="window.location.href='invoices.html'">&#x1F4B3; Send Invoice</button>
