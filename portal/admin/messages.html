@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+q<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,20 @@
   <title>Admin - Client Messages</title>
   <style>
     :root {
-      --sidebar-width: 240px;
+      --bg-main: rgba(24, 26, 32, 0.95);
+      --glass: rgba(17,24,39,0.82);
+      --glass-light: rgba(30,41,59,0.72);
+      --primary: #6c63ff;
+      --accent: #37d67a;
+      --danger: #f44336;
+      --warning: #ffb300;
+      --text: #f8f8ff;
+      --muted: #a0a4b8;
+      --sidebar-width: 220px;
+      --sidebar-collapsed: 64px;
+      --transition: 0.25s cubic-bezier(.4,0,.2,1);
+      --radius: 24px;
+      --shadow: 0 16px 40px rgba(0,0,0,0.32);
       --header-height: 64px;
       --background: #0f172a;
       --glass-bg: rgba(17,24,39,0.82);
@@ -443,19 +456,15 @@
         <nav>
             <ul>
                 <li><a href="dashboard.html"><span class="icon">&#x1F4C8;</span><span>Dashboard</span></a></li>
-                <li><a href="clients.html"><span class="icon">&#x1F465;</span><span>Clients</span></a></li>
                 <li><a href="projects.html"><span class="icon">&#x1F4C4;</span><span>Projects</span></a></li>
+
                 <li><a href="files.html"><span class="icon">&#x1F4C1;</span><span>Files</span></a></li>
                 <li><a class="active" href="messages.html"><span class="icon">&#x2709;&#xFE0F;</span><span>Messages</span></a></li>
                 <li><a href="invoices.html"><span class="icon">&#x1F4B3;</span><span>Invoices</span></a></li>
             </ul>
         </nav>
-        <div class="settings">
-            <ul>
-                <li><a href="settings.html"><span class="icon">&#9881;&#65039;</span><span>Settings</span></a></li>
-            </ul>
-        </div>
     </aside>
+
   <div class="main-content">
     <div class="header">
       Client Messages
