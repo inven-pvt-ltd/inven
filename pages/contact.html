@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact INVEN to discuss your website, AI, automation, cloud, or infrastructure project. Start a conversation and let's build something amazing together.">
+    <meta name="keywords" content="Contact INVEN, contact web development, get in touch, website inquiry, start project, Pune, email INVEN, business contact">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://inven.dev/pages/contact.html">
+    <meta property="og:title" content="Contact INVEN">
+    <meta property="og:description" content="Contact INVEN to discuss your next website, AI, automation, or infrastructure project. Start your journey with us today.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inven.dev/pages/contact.html">
+    <title>Contact INVEN | Let's Build Something Amazing Together</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-pap2uAqU1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2vVb2lD3v1S6n2y4R6l1w2l4w2p1w2==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* About Us Page Specific Styles */
+        /* New About Content Styles */
+        /* Contact Page Specific Styles */
+        .contact-hero-area {
+            background: transparent;
+            padding: 140px 0 0 0;
+            position: relative;
+            z-index: 1;
+        }
+        .contact-hero-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 6%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-hero-main h1 {
+            color: #fff;
+            font-size: clamp(2.7rem, 6vw, 4.2rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1.1rem;
+            text-align: center;
+        }
+        .contact-hero-main .contact-lead {
+            font-size: 1.3rem;
+            max-width: 600px;
+            text-align: center;
+            color: #e1e6eb;
+            margin-bottom: 2.2rem;
+            line-height: 1.7;
+        }
+        .contact-hero-actions {
+            display: flex;
+            gap: 1.1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .contact-cards-area {
+            padding: 64px 0 0 0;
+            max-width: 980px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        .contact-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.6rem;
+            width: 100%;
+        }
+        .contact-card {
+            background: rgba(20, 25, 40, 0.85);
+            border: 1px solid rgba(0,255,204,0.08);
+            border-radius: 22px;
+            padding: 2.2rem 1.1rem 1.2rem;
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+        .contact-card i {
+            font-size: 2.1rem;
+            color: #00ffd0;
+            margin-bottom: 0.6rem;
+        }
+        .contact-card .card-label {
+            color: #c7f5f5;
+            font-size: 1.06rem;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        .contact-card .card-value {
+            color: #fff;
+            font-size: 1.18rem;
+            font-weight: bold;
+            text-align: center;
+            word-break: break-all;
+        }
+        @media (max-width: 900px) {
+            .contact-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.1rem;
+            }
+            .contact-hero-main {
+                max-width: 98vw;
+            }
+        }
+        @media (max-width: 700px) {
+            .contact-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .contact-hero-main h1 {
+                font-size: 2.2rem;
+            }
+            .contact-hero-main .contact-lead {
+                font-size: 1.07rem;
+            }
+        }
+        /* Contact Form & Why Choose Section */
+        .contact-main-section {
+            display: flex;
+            gap: 3.5rem;
+            max-width: 1100px;
+            margin: 70px auto 0;
+            padding: 0 6%;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .contact-form-area {
+            background: rgba(20,25,40,0.85);
+            border-radius: 22px;
+            border: 1px solid rgba(0,255,204,0.08);
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.08);
+            padding: 2.3rem 2rem 2rem;
+            flex: 1 1 340px;
+            min-width: 320px;
+            max-width: 480px;
+        }
+        .contact-form-area h2 {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        .contact-form-area form label {
+            color: #c7f5f5;
+            font-size: 1.03rem;
+            margin-bottom: 0.28rem;
+            font-weight: 500;
+            display: block;
+        }
+        .contact-form-area input,
+        .contact-form-area select,
+        .contact-form-area textarea {
+            width: 100%;
+            background: rgba(13,15,19,0.82);
+            color: #fff;
+            border: 1px solid rgba(0,255,204,0.13);
+            border-radius: 9px;
+            padding: 0.75rem 1rem;
+            font-size: 1.05rem;
+            margin-bottom: 1.05rem;
+            margin-top: 0.18rem;
+            resize: none;
+            transition: border 0.2s;
+        }
+        .contact-form-area input:focus,
+        .contact-form-area select:focus,
+        .contact-form-area textarea:focus {
+            outline: none;
+            border-color: #00ffd0;
+        }
+        .contact-form-area button {
+            width: 100%;
+            margin-top: 0.7rem;
+        }
+        #formFeedback {
+            margin-top: 0.7rem;
+            color: #00ffd0;
+            text-align: center;
+            font-size: 1.04rem;
+            min-height: 1.2em;
+        }
+        .why-choose-card {
+            background: rgba(20,25,40,0.85);
+            border-radius: 22px;
+            border: 1px solid rgba(0,255,204,0.08);
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.08);
+            padding: 2.3rem 2rem 2rem;
+            flex: 1 1 320px;
+            min-width: 280px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+        .why-choose-card h3 {
+            color: #fff;
+            font-size: 1.38rem;
+            margin-bottom: 1.1rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        .why-choose-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .why-choose-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.1rem;
+        }
+        .why-choose-feature i {
+            color: #00ffd0;
+            font-size: 1.55rem;
+            margin-top: 0.1rem;
+        }
+        .why-choose-feature .feature-content {
+            color: #c8d2df;
+        }
+        .why-choose-feature .feature-title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.09rem;
+            margin-bottom: 0.09rem;
+        }
+        @media (max-width: 1100px) {
+            .contact-main-section {
+                flex-direction: column;
+                gap: 2.5rem;
+                align-items: stretch;
+            }
+            .contact-form-area,
+            .why-choose-card {
+                max-width: 100%;
+            }
+        }
+        /* Stepper Section */
+        .contact-process-section {
+            margin: 80px auto 0;
+            padding: 0 6%;
+            max-width: 1100px;
+        }
+        .contact-process-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin: 0 auto;
+            max-width: 1000px;
+            position: relative;
+        }
+        .contact-process-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-width: 0;
+        }
+        .contact-process-step .step-circle {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #00ffd0 0%, #0099ff 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #181f2b;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 24px rgba(0,255,204,0.09);
+        }
+        .contact-process-step .step-label {
+            color: #e1e6eb;
+            font-size: 1.04rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        .contact-process-steps::before {
+            content: "";
+            position: absolute;
+            top: 19px;
+            left: 7%;
+            right: 7%;
+            height: 4px;
+            background: linear-gradient(90deg, #00ffd0, #0099ff);
+            z-index: 0;
+            border-radius: 3px;
+        }
+        @media (max-width: 900px) {
+            .contact-process-steps {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 2.2rem;
+            }
+            .contact-process-steps::before {
+                display: none;
+            }
+            .contact-process-step {
+                flex-direction: row;
+                align-items: center;
+                gap: 1.1rem;
+                margin-bottom: 0.7rem;
+            }
+            .contact-process-step .step-label {
+                text-align: left;
+            }
+        }
+        /* FAQ Section */
+        .contact-faq-section {
+            margin: 82px auto 0;
+            padding: 0 6%;
+            max-width: 900px;
+        }
+        .contact-faq-section h2 {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+        .faq-item {
+            background: rgba(20,25,40,0.85);
+            border-radius: 18px;
+            border: 1px solid rgba(0,255,204,0.08);
+            box-shadow: 0 2px 12px 0 rgba(0,255,204,0.07);
+            padding: 1.2rem 1.4rem;
+            cursor: pointer;
+            transition: box-shadow 0.18s;
+            position: relative;
+        }
+        .faq-item .faq-question {
+            color: #00ffd0;
+            font-size: 1.13rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .faq-item .faq-answer {
+            color: #c8d2df;
+            font-size: 1.05rem;
+            margin-top: 0.7rem;
+            display: none;
+        }
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+        .faq-toggle-icon {
+            margin-left: 0.9rem;
+            font-size: 1.22rem;
+            transition: transform 0.2s;
+        }
+        .faq-item.open .faq-toggle-icon {
+            transform: rotate(45deg);
+        }
+        /* Final CTA */
+        .contact-final-cta-section {
+            margin: 90px auto 0;
+            padding: 0 6% 70px 6%;
+            max-width: 900px;
+            text-align: center;
+        }
+        .contact-final-cta-section h2 {
+            color: #fff;
+            font-size: 2.3rem;
+            margin-bottom: 1.1rem;
+            font-weight: 800;
+        }
+        .contact-final-cta-section .cta-button {
+            margin-top: 1.2rem;
+        }
+        body {
+            background: transparent;
+        }
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .about-section,
+        .core-values-section,
+        .by-the-numbers-section {
+            padding: 90px 10%;
+        }
+        .about-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        .core-values-section {
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        .about-section p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #c9d3df;
+        }
+        .about-section h2,
+        .core-values-section h2,
+        .by-the-numbers-section h2 {
+            font-size: 2.6rem;
+            margin-bottom: 1.25rem;
+        }
+        .core-value-card,
+        .number-card {
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0,255,204,0.12);
+        }
+        /* (removed duplicate .hero-image img rule) */
+        @keyframes floatY {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 1.8rem;
+            max-width: 1150px;
+            margin: 3rem auto 0;
+            justify-items: center;
+        }
+        .team-card {
+            background: rgba(13,15,19,0.82);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 28px;
+            padding: 2rem;
+            min-height: 520px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .team-card::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            right: 0;
+            bottom: 0;
+            background: rgba(13,15,19,0.82);
+            border-bottom-right-radius: 24px;
+            border-left: 1.5px solid rgba(255,255,255,0.07);
+            border-top: 1.5px solid rgba(255,255,255,0.07);
+            transform: rotate(45deg) translate(29px, 29px);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .team-card h3 {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0;
+        }
+        .team-card h4 {
+            margin-top: .5rem;
+            color: #b9c1cb;
+            font-weight: 500;
+        }
+        .team-photo {
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-top: 2rem;
+        }
+        .team-photo img {
+            width: 85%;
+            max-width: 320px;
+            height: auto;
+            object-fit: contain;
+        }
+        .core-values-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        .numbers-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        .core-value-card {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            align-items: start;
+            gap: 2rem;
+            background: rgba(20,25,40,0.85);
+            border: 1px solid rgba(0,255,204,0.08);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .number-card {
+            background: rgba(20, 25, 40, 0.85);
+            border-radius: 1.2rem;
+            padding: 2.2rem 1.5rem 1.5rem;
+            border: 1px solid rgba(0,255,204,0.07);
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.08);
+            transition: transform 0.2s cubic-bezier(.4,2,.3,1), box-shadow 0.2s;
+            text-align: center;
+        }
+        .core-value-card:hover,
+        .number-card:hover {
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 0 4px 36px 0 rgba(0,255,204,0.16);
+        }
+        .core-value-card i,
+        .number-card .number i {
+            font-size: 2.2rem;
+            color: #00ffd0;
+            margin-bottom: 0.7rem;
+        }
+        .number-card .number,
+        .core-values-section h2,
+        .by-the-numbers-section h2,
+        .about-section h2,
+        .about-section.commitment-section h2 {
+            text-align: center;
+        }
+        .number-card .desc,
+        .about-section.commitment-section p {
+            text-align: center;
+        }
+        .member-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: flex-start;
+            text-align: left;
+            align-self: start;
+            padding-top: 0.25rem;
+        }
+
+        .member-info h3 {
+            margin: 0;
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+
+        .member-info h4 {
+            margin: 0;
+            color: #00ffd0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        .member-info p {
+            margin: 0;
+            text-align: left;
+            margin-top: 0;
+            line-height: 1.9;
+            color: #e6eef8;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+        .number-card .number {
+            display: block;
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: #00ffd0;
+            margin-bottom: 0.6rem;
+        }
+        .number-card .desc {
+            color: #c7f5f5;
+            font-size: 1.06rem;
+        }
+        .cta-button {
+            background: linear-gradient(90deg, #00ffd0 0%, #0099ff 100%);
+            color: #171e2b;
+            border: none;
+            border-radius: 999px;
+            padding: 0.85em 2.2em;
+            font-size: 1.14rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 2.2rem auto 0;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 2px 18px 0 rgba(0,255,204,0.10);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .cta-button:hover,
+        .cta-button:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 28px 0 rgba(0,255,204,0.20);
+            color: #0a0d13;
+            filter: brightness(1.03);
+        }
+        @media (max-width: 768px) {
+            .about-section,
+            .core-values-section,
+            .by-the-numbers-section {
+                padding: 60px 5%;
+            }
+            .aboutus-content-area {
+                padding: 120px 0 0 0;
+            }
+        }
+        .core-value-card img {
+            width: 100% !important;
+            max-width: 260px;
+            height: 320px !important;
+            object-fit: cover;
+            border-radius: 18px !important;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px){
+          .core-values-cards{max-width:100%;}
+          .core-value-card{grid-template-columns:1fr;text-align:center;}
+        }
+
+        .core-value-card:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .core-value-card h3 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .core-value-card h4 {
+            color: #00ffd0;
+            margin: -0.3rem 0 0.5rem;
+            font-size: 1.05rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .core-value-card p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #c8d2df;
+        }
+    /* Navbar highlight matching site theme */
+    .nav-links a {
+        position: relative;
+    }
+
+    .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #00ffd0, #0099ff);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+        transform: scaleX(1);
+    }
+
+    .nav-links a.active::after {
+        transform: scaleX(0);
+    }
+
+    .nav-links a.active {
+        color: inherit;
+    }
+    .commitment-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 2.2rem;
+    }
+    .secondary-button {
+        background: linear-gradient(135deg, #ff3b30, #d70015);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 10px 24px rgba(255,59,48,0.25);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+    .secondary-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 32px rgba(255,59,48,0.35);
+        filter: brightness(1.08);
+    }
+    </style>
+</head>
+
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">INVEN<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="../portal/login.html" class="client-portal-link">Client Portal</a></li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-hero-area">
+      <div class="contact-hero-main">
+        <h1>Let's Build Something Amazing Together</h1>
+        <div class="contact-lead">
+          Ready to discuss your next website, AI, automation, cloud, or infrastructure project? Reach out and let's make it happen.
+        </div>
+        <div class="contact-hero-actions">
+          <a href="#contactForm" class="cta-button">Start Your Project</a>
+          <a href="mailto:hello@inven.in" class="cta-button secondary-button">Email Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="contact-cards-area">
+      <div class="contact-cards-grid">
+        <div class="contact-card">
+          <i class="fa fa-envelope"></i>
+          <div class="card-label">Email</div>
+          <div class="card-value">hello@inven.in</div>
+        </div>
+        <div class="contact-card">
+          <i class="fa fa-clock"></i>
+          <div class="card-label">Response Time</div>
+          <div class="card-value">Within 24 Hours</div>
+        </div>
+        <div class="contact-card">
+          <i class="fa fa-calendar-alt"></i>
+          <div class="card-label">Working Hours</div>
+          <div class="card-value">Monday–Saturday • 10 AM – 7 PM</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Contact Form & Why Choose Section -->
+    <section class="contact-main-section">
+      <div class="contact-form-area">
+        <h2>Send Us a Message</h2>
+        <form id="contactForm">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Your Name" required>
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Your Company (optional)">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required>
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="Phone (optional)">
+          <label for="service">Service</label>
+          <select id="service" name="service" required>
+            <option value="">Select a service</option>
+            <option>Website Development</option>
+            <option>UI/UX Design</option>
+            <option>AI & Automation</option>
+            <option>Cloud & Infrastructure</option>
+            <option>Other</option>
+          </select>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project or question..." rows="4" required></textarea>
+          <button type="submit" class="cta-button">Send Message</button>
+          <div id="formFeedback"></div>
+        </form>
+      </div>
+      <div class="why-choose-card">
+        <h3>Why Choose INVEN</h3>
+        <div class="why-choose-features">
+          <div class="why-choose-feature">
+            <i class="fa fa-gem"></i>
+            <div class="feature-content">
+              <div class="feature-title">Premium Design</div>
+              <div>Modern, high-impact interfaces tailored for your brand.</div>
+            </div>
+          </div>
+          <div class="why-choose-feature">
+            <i class="fa fa-robot"></i>
+            <div class="feature-content">
+              <div class="feature-title">AI Solutions</div>
+              <div>Leverage automation and AI to supercharge your business.</div>
+            </div>
+          </div>
+          <div class="why-choose-feature">
+            <i class="fa fa-bolt"></i>
+            <div class="feature-content">
+              <div class="feature-title">Fast Delivery</div>
+              <div>Rapid project turnaround with uncompromising quality.</div>
+            </div>
+          </div>
+          <div class="why-choose-feature">
+            <i class="fa fa-handshake"></i>
+            <div class="feature-content">
+              <div class="feature-title">Long-Term Support</div>
+              <div>Dedicated partnership beyond launch for lasting success.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Process Section -->
+    <section class="contact-process-section">
+      <div class="contact-process-steps">
+        <div class="contact-process-step">
+          <div class="step-circle">1</div>
+          <div class="step-label">Contact</div>
+        </div>
+        <div class="contact-process-step">
+          <div class="step-circle">2</div>
+          <div class="step-label">Consultation</div>
+        </div>
+        <div class="contact-process-step">
+          <div class="step-circle">3</div>
+          <div class="step-label">Planning</div>
+        </div>
+        <div class="contact-process-step">
+          <div class="step-circle">4</div>
+          <div class="step-label">Development</div>
+        </div>
+        <div class="contact-process-step">
+          <div class="step-circle">5</div>
+          <div class="step-label">Launch</div>
+        </div>
+        <div class="contact-process-step">
+          <div class="step-circle">6</div>
+          <div class="step-label">Support</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="contact-faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            How soon will I get a response after contacting INVEN?
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            We typically respond within 24 hours, Monday through Saturday.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            What information should I include in my inquiry?
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Please share your name, company (if any), contact details, and a brief about your project or question. The more details, the better we can help!
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Do you work with startups, enterprises, or individuals?
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            We work with businesses of all sizes – from startups to established enterprises and ambitious individuals.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Can you help with existing websites or infrastructure?
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Absolutely! We offer redesign, optimization, migration, and ongoing support for existing sites and cloud/server setups.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Where is INVEN based, and do you serve international clients?
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            We're based in Pune, India, and proudly serve clients worldwide.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="contact-final-cta-section">
+      <h2>Ready to Build Something Incredible?</h2>
+      <a href="#contactForm" class="cta-button">Start Your Project</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>INVEN</h3>
+                <p>Building premium websites, scalable server infrastructure, and high-performance digital experiences for businesses worldwide.</p>
+                <p><strong>Fast. Secure. Reliable. Built for growth.</strong></p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-services">
+                <h4>Core Services</h4>
+                <ul>
+                    <li>Custom Website Development</li>
+                    <li>UI/UX Design</li>
+                    <li>Cloud &amp; VPS Deployment</li>
+                    <li>Server Creation &amp; Management</li>
+                    <li>Performance Optimization</li>
+                    <li>Maintenance &amp; Support</li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>Email: hello@inven.in</p>
+                <p>Response Time: Within 24 Hours</p>
+                <p>Serving clients globally.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 INVEN. All rights reserved.</p>
+            <p>Designed to deliver premium digital experiences.</p>
+        </div>
+    </footer>
+    <script src="../script.js"></script>
+    <script>
+    // FAQ expand/collapse
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+          this.classList.toggle('open');
+        });
+      });
+    });
+    // Contact form feedback (dummy, not sending)
+    document.addEventListener("DOMContentLoaded", function () {
+      var form = document.getElementById("contactForm");
+      if (form) {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var feedback = document.getElementById("formFeedback");
+          feedback.textContent = "Thank you! We'll get back to you soon.";
+          form.reset();
+        });
+      }
+    });
+    </script>
+</body>
+</html>
