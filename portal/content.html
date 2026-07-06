@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INVEN Portal | Website Content</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/portal.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="bg-primary" data-page="content">
+  <div class="portal-container">
+    <div id="sidebar-container"></div>
+    <div class="portal-main">
+      <div id="navbar-container"></div>
+      <main class="portal-content content-page">
+        <div class="page-header">
+          <div class="page-title-section">
+            <div class="page-title">
+              <h1>Website Content</h1>
+              <p class="page-description">Edit only the approved content fields for your website.</p>
+            </div>
+          </div>
+        </div>
+        <form class="card stack" id="content-form">
+          <div class="field-grid" id="content-fields"></div>
+          <div class="form-section">
+            <div class="form-section-title">Gallery Images</div>
+            <div class="form-group">
+              <label class="form-label" for="gallery">Upload Images</label>
+              <input class="form-input file-input" id="gallery" name="gallery" type="file" accept="image/*" multiple>
+            </div>
+            <div class="inline-actions" id="gallery-list"></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save Content</button>
+          </div>
+          <p class="status-message" id="content-message"></p>
+        </form>
+      </main>
+      <div id="footer-container"></div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
+  <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="js/mvp.js"></script>
+  <script defer src="js/content.js"></script>
+  <script defer src="js/components.js"></script>
+</body>
+</html>

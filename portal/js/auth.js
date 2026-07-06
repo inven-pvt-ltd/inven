@@ -19,6 +19,32 @@ class AuthManager {
       this.onAuthStateChange();
     }
 
+    if (window.firebaseAuth) {
+      window.firebaseAuth.onAuthStateChanged(async (firebaseUser) => {
+        if (!firebaseUser) return;
+        if (this.isAuthenticated) return;
+
+        try {
+          const snap = await window.firebaseDb.collection('users').doc(firebaseUser.uid).get();
+          const profile = snap.exists ? snap.data() : {};
+          this.user = {
+            id: firebaseUser.uid,
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            name: profile.name || firebaseUser.email,
+            role: profile.role || 'client',
+            clientId: profile.clientId || firebaseUser.uid,
+            avatar: (profile.name || firebaseUser.email || 'U').charAt(0).toUpperCase()
+          };
+          this.isAuthenticated = true;
+          sessionStorage.setItem('portal_user', JSON.stringify(this.user));
+          this.onAuthStateChange();
+        } catch (error) {
+          console.error('Unable to load user profile:', error);
+        }
+      });
+    }
+
     // Setup form handlers
     this.setupLoginForm();
     this.setupLogout();
@@ -68,7 +94,7 @@ class AuthManager {
   }
 
   /**
-   * Mock authentication - Replace with Firebase
+   * Authenticate with Firebase and load portal profile
    */
   async authenticateUser(email, password) {
     const cred = await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
@@ -86,9 +112,11 @@ class AuthManager {
       success: true,
       user: {
         id: uid,
+        uid,
         email: cred.user.email,
         name: profile.name || cred.user.email,
         role: profile.role || 'client',
+        clientId: profile.clientId || uid,
         avatar: (profile.name || cred.user.email || 'U').charAt(0).toUpperCase()
       }
     };

@@ -3,21 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal | Files</title>
+  <title>INVEN Portal | Files</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/utilities.css">
   <link rel="stylesheet" href="../css/portal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/forms.css">
   <link rel="stylesheet" href="../css/dashboard.css">
 </head>
-<body>
-  <!-- Files overview placeholder -->
-  <header>
-    <!-- TODO: Insert navbar component -->
-  </header>
-  <main class="files-page">
-    <h1>Files</h1>
-    <p>Browse shared assets, documents, and delivery files.</p>
-    <!-- TODO: Add files dashboard and filters -->
-  </main>
-  <script defer src="../js/files.js"></script>
+<body class="bg-primary" data-page="files">
+  <div class="portal-container">
+    <div id="sidebar-container"></div>
+    <div class="portal-main">
+      <div id="navbar-container"></div>
+      <main class="portal-content files-page">
+        <div class="page-header">
+          <div class="page-title-section">
+            <div class="page-title">
+              <h1>Files</h1>
+              <p class="page-description">Upload and download project files.</p>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-grid dashboard-grid-2">
+          <div class="stat-card">
+            <div class="stat-card-icon">📄</div>
+            <div class="stat-card-content">
+              <div class="stat-card-label">Total Files</div>
+              <div class="stat-card-value" id="total-files">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">💾</div>
+            <div class="stat-card-content">
+              <div class="stat-card-label">Storage Used</div>
+              <div class="stat-card-value" id="storage-used">0 B</div>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-grid dashboard-grid-2">
+          <form class="card" id="file-upload-form">
+            <div class="card-header"><div class="card-title">Upload File</div></div>
+            <div class="form-group">
+              <label class="form-label" for="project">Project</label>
+              <input class="form-input" id="project" name="project" type="text" placeholder="Website project">
+            </div>
+            <div class="form-group">
+              <label class="form-label required" for="file">File</label>
+              <input class="form-input file-input" id="file" name="file" type="file" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Upload</button>
+            <p class="status-message" id="files-message"></p>
+          </form>
+          <section class="card">
+            <div class="card-header"><div class="card-title">Project Files</div></div>
+            <div class="table-wrap">
+              <table class="data-table" id="files-table">
+                <thead><tr><th>Name</th><th>Project</th><th>Size</th><th>Uploaded</th><th>Action</th></tr></thead>
+                <tbody><tr><td colspan="5">Loading files...</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+      <div id="footer-container"></div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
   <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/mvp.js"></script>
+  <script defer src="../js/files.js"></script>
+  <script defer src="../js/components.js"></script>
 </body>
 </html>

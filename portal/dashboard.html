@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="INVEN Portal - Dashboard Overview">
   <title>INVEN Portal | Dashboard</title>
-  
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/utilities.css">
@@ -14,158 +12,86 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
-<body class="bg-primary">
+<body class="bg-primary" data-page="dashboard">
   <div class="portal-container">
-    <!-- Sidebar -->
     <div id="sidebar-container"></div>
-
-    <!-- Main Content -->
     <div class="portal-main">
-      <!-- Navbar -->
       <div id="navbar-container"></div>
-
-      <!-- Page Content -->
       <main class="portal-content dashboard-page">
-        <!-- Page Header -->
         <div class="page-header">
           <div class="page-title-section">
             <div class="page-title">
               <h1>Dashboard</h1>
-              <p class="page-description">Welcome back! Here's your project overview.</p>
+              <p class="page-description">Project overview, progress, activity, and payment status.</p>
             </div>
             <div class="page-actions">
-              <button class="btn btn-secondary">📅 Last 7 Days</button>
-              <button class="btn btn-primary">+ New Project</button>
+              <a class="btn btn-primary" href="/portal/revisions/index.html">New Revision</a>
+              <a class="btn btn-secondary" href="/portal/files/index.html">Upload File</a>
             </div>
           </div>
         </div>
 
-        <!-- Stats Grid -->
         <div class="dashboard-grid dashboard-grid-4">
           <div class="stat-card">
             <div class="stat-card-icon">📊</div>
             <div class="stat-card-content">
               <div class="stat-card-label">Active Projects</div>
-              <div class="stat-card-value">12</div>
-              <div class="stat-card-change positive">↑ 2 new this month</div>
+              <div class="stat-card-value" id="active-projects">0</div>
             </div>
           </div>
-
           <div class="stat-card">
-            <div class="stat-card-icon">✅</div>
+            <div class="stat-card-icon">🔄</div>
             <div class="stat-card-content">
-              <div class="stat-card-label">Completed</div>
-              <div class="stat-card-value">8</div>
-              <div class="stat-card-change positive">↑ 3 this month</div>
+              <div class="stat-card-label">Open Revisions</div>
+              <div class="stat-card-value" id="open-revisions">0</div>
             </div>
           </div>
-
           <div class="stat-card">
-            <div class="stat-card-icon">⏳</div>
+            <div class="stat-card-icon">📄</div>
             <div class="stat-card-content">
-              <div class="stat-card-label">In Progress</div>
-              <div class="stat-card-value">4</div>
-              <div class="stat-card-change negative">↓ 1 delayed</div>
+              <div class="stat-card-label">Shared Files</div>
+              <div class="stat-card-value" id="shared-files">0</div>
             </div>
           </div>
-
           <div class="stat-card">
             <div class="stat-card-icon">💰</div>
             <div class="stat-card-content">
-              <div class="stat-card-label">Total Spent</div>
-              <div class="stat-card-value">$12.5K</div>
-              <div class="stat-card-change positive">On Budget</div>
+              <div class="stat-card-label">Outstanding</div>
+              <div class="stat-card-value" id="outstanding-balance">₹0</div>
+              <div class="stat-card-change" id="next-payment-due">No payment currently due</div>
             </div>
           </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="card card-full">
-          <div class="card-header">
-            <div class="card-title">Quick Actions</div>
-          </div>
-          <div class="card-body">
-            <div class="quick-actions">
-              <a href="revisions/new-request.html" class="quick-action-btn hover-lift">
-                <div class="quick-action-icon">🔄</div>
-                <div class="quick-action-label">Request Revision</div>
-              </a>
-              <a href="support/new-ticket.html" class="quick-action-btn hover-lift">
-                <div class="quick-action-icon">🎫</div>
-                <div class="quick-action-label">Create Ticket</div>
-              </a>
-              <a href="files/uploads.html" class="quick-action-btn hover-lift">
-                <div class="quick-action-icon">📤</div>
-                <div class="quick-action-label">Upload Files</div>
-              </a>
-              <a href="invoices/index.html" class="quick-action-btn hover-lift">
-                <div class="quick-action-icon">💳</div>
-                <div class="quick-action-label">View Invoices</div>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Progress & Activity -->
         <div class="dashboard-grid dashboard-grid-2">
           <div class="card">
             <div class="card-header">
               <div class="card-title">Project Progress</div>
-              <button class="btn btn-sm btn-ghost">View All</button>
             </div>
             <div class="card-body">
-              <div class="progress-section">
-                <div class="progress-item">
-                  <div class="progress-header">
-                    <span class="progress-label">Website Redesign</span>
-                    <span class="progress-percentage">75%</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 75%"></div>
-                  </div>
-                </div>
-                <div class="progress-item">
-                  <div class="progress-header">
-                    <span class="progress-label">Mobile App</span>
-                    <span class="progress-percentage">45%</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 45%"></div>
-                  </div>
-                </div>
-              </div>
+              <div class="progress-section" id="project-progress-list"></div>
             </div>
           </div>
-
           <div class="card">
             <div class="card-header">
               <div class="card-title">Recent Activity</div>
-              <button class="btn btn-sm btn-ghost">View All</button>
             </div>
             <div class="card-body">
-              <div class="activity-feed">
-                <div class="activity-item">
-                  <div class="activity-icon">📁</div>
-                  <div class="activity-content">
-                    <div class="activity-title">Files Uploaded</div>
-                    <div class="activity-description">Website Redesign project updated</div>
-                    <div class="activity-time">2 hours ago</div>
-                  </div>
-                </div>
-              </div>
+              <div class="activity-feed" id="recent-activity-list"></div>
             </div>
           </div>
         </div>
       </main>
-
-      <!-- Footer -->
       <div id="footer-container"></div>
     </div>
   </div>
-
-  <!-- Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
   <script defer src="js/auth.js"></script>
+  <script defer src="js/mvp.js"></script>
   <script defer src="js/dashboard.js"></script>
   <script defer src="js/components.js"></script>
 </body>

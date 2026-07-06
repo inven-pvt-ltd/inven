@@ -1,7 +1,6 @@
 /**
  * INVEN Portal - Firebase Configuration
- * Initialize Firebase and prepare for authentication
- * TODO: Replace with your Firebase project config
+ * Initialize Firebase and prepare portal services
  */
 
 // Firebase Configuration
@@ -15,7 +14,6 @@ const firebaseConfig = {
   measurementId: "G-05H2TBEFMY"
 };
 
-// NOTE: In production, use environment variables for sensitive data
 // Initialize Firebase when ready
 if (typeof firebase !== 'undefined') {
   try {

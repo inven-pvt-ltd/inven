@@ -6,10 +6,11 @@
 class ComponentLoader {
   static async loadComponents() {
     try {
+      const basePath = window.location.pathname.includes('/portal/') ? '/portal/' : '';
       const [navbar, sidebar, footer] = await Promise.all([
-        fetch('components/navbar.html').then(r => r.text()),
-        fetch('components/sidebar.html').then(r => r.text()),
-        fetch('components/footer.html').then(r => r.text())
+        fetch(`${basePath}components/navbar.html`).then(r => r.text()),
+        fetch(`${basePath}components/sidebar.html`).then(r => r.text()),
+        fetch(`${basePath}components/footer.html`).then(r => r.text())
       ]);
 
       // Inject components

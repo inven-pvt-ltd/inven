@@ -1,1 +1,69 @@
-/**\n * INVEN Portal - Dashboard Module\n * Handles dashboard data and interactions\n */\n\nclass DashboardManager {\n  constructor() {\n    this.projects = [];\n    this.activities = [];\n    this.stats = {};\n    this.init();\n  }\n\n  init() {\n    this.loadMockData();\n    this.initEventListeners();\n  }\n\n  /**\n   * Load mock data - Replace with Firestore queries\n   */\n  loadMockData() {\n    this.projects = [\n      { id: 1, name: 'Website Redesign', progress: 75, status: 'active', deadline: '2024-02-15' },\n      { id: 2, name: 'Mobile App Development', progress: 45, status: 'active', deadline: '2024-03-01' },\n      { id: 3, name: 'Brand Guidelines', progress: 100, status: 'completed', deadline: '2024-01-20' },\n      { id: 4, name: 'Marketing Campaign', progress: 60, status: 'active', deadline: '2024-02-28' }\n    ];\n\n    this.stats = {\n      activeProjects: 12,\n      completed: 8,\n      inProgress: 4,\n      totalSpent: '$12.5K'\n    };\n  }\n\n  /**\n   * Initialize event listeners\n   */\n  initEventListeners() {\n    document.querySelectorAll('.quick-action-btn').forEach(btn => {\n      btn.addEventListener('click', (e) => {\n        e.preventDefault();\n        const href = btn.getAttribute('href');\n        if (href) window.location.href = href;\n      });\n    });\n  }\n\n  /**\n   * Get dashboard stats\n   */\n  getStats() {\n    return this.stats;\n  }\n\n  /**\n   * Get all projects\n   */\n  getProjects() {\n    return this.projects;\n  }\n}\n\nconst dashboardManager = new DashboardManager();\nwindow.DashboardManager = dashboardManager;
+async function initDashboard() {
+  const user = await PortalMvp.ready();
+  const projectList = document.getElementById('project-progress-list');
+  const activityList = document.getElementById('recent-activity-list');
+  const paymentDue = document.getElementById('next-payment-due');
+
+  const [projects, revisions, invoices, files] = await Promise.all([
+    PortalMvp.getClientRows('projects', user, 'updatedAt').catch(() => []),
+    PortalMvp.getClientRows('revisionRequests', user, 'createdAt').catch(() => []),
+    PortalMvp.getClientRows('invoices', user, 'dueDate').catch(() => []),
+    PortalMvp.getClientRows('files', user, 'uploadedAt').catch(() => [])
+  ]);
+
+  const activeProjects = projects.filter(project => (project.status || '').toLowerCase() !== 'completed');
+  const openRevisions = revisions.filter(item => (item.status || 'Pending') !== 'Completed');
+  const unpaidInvoices = invoices.filter(invoice => (invoice.status || '').toLowerCase() !== 'paid');
+  const nextInvoice = unpaidInvoices.sort((a, b) => PortalMvp.sortDate(a.dueDate) - PortalMvp.sortDate(b.dueDate))[0];
+
+  document.getElementById('active-projects').textContent = activeProjects.length;
+  document.getElementById('open-revisions').textContent = openRevisions.length;
+  document.getElementById('shared-files').textContent = files.length;
+  document.getElementById('outstanding-balance').textContent = PortalMvp.currency.format(
+    unpaidInvoices.reduce((sum, invoice) => sum + Number(invoice.amount || 0), 0)
+  );
+
+  paymentDue.textContent = nextInvoice
+    ? `${PortalMvp.currency.format(Number(nextInvoice.amount || 0))} due ${PortalMvp.date(nextInvoice.dueDate)}`
+    : 'No payment currently due';
+
+  projectList.innerHTML = projects.length
+    ? projects.slice(0, 4).map(project => {
+      const progress = Math.max(0, Math.min(100, Number(project.progress || 0)));
+      return `
+        <div class="progress-item">
+          <div class="progress-header">
+            <span class="progress-label">${project.name || 'Project'}</span>
+            <span class="progress-percentage">${progress}%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
+        </div>
+      `;
+    }).join('')
+    : '<p class="empty-state">No projects added yet.</p>';
+
+  const activity = [
+    ...revisions.map(item => ({ type: 'Revision', title: item.title, date: item.createdAt, detail: item.status || 'Pending' })),
+    ...files.map(item => ({ type: 'File', title: item.name, date: item.uploadedAt, detail: 'Uploaded' })),
+    ...invoices.map(item => ({ type: 'Invoice', title: item.invoiceNumber || item.project, date: item.dueDate, detail: item.status || 'Pending' }))
+  ].sort((a, b) => {
+    const dateA = a.date?.toDate ? a.date.toDate() : new Date(a.date || 0);
+    const dateB = b.date?.toDate ? b.date.toDate() : new Date(b.date || 0);
+    return dateB - dateA;
+  }).slice(0, 6);
+
+  activityList.innerHTML = activity.length
+    ? activity.map(item => `
+      <div class="activity-item">
+        <div class="activity-icon">${item.type.charAt(0)}</div>
+        <div class="activity-content">
+          <div class="activity-title">${item.title || item.type}</div>
+          <div class="activity-description">${item.type} - ${item.detail}</div>
+          <div class="activity-time">${PortalMvp.date(item.date)}</div>
+        </div>
+      </div>
+    `).join('')
+    : '<p class="empty-state">No recent activity yet.</p>';
+}
+
+document.addEventListener('DOMContentLoaded', initDashboard);

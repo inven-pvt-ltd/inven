@@ -3,22 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal | Profile</title>
+  <title>INVEN Portal | Profile</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/utilities.css">
   <link rel="stylesheet" href="css/portal.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
-<body>
-  <!-- Profile page placeholder -->
-  <header>
-    <!-- TODO: Insert navbar component -->
-  </header>
-  <main class="profile-page">
-    <h1>Profile</h1>
-    <p>Manage your account details and communication preferences.</p>
-    <!-- TODO: Add profile settings form -->
-  </main>
-  <script defer src="js/dashboard.js"></script>
+<body class="bg-primary" data-page="profile">
+  <div class="portal-container">
+    <div id="sidebar-container"></div>
+    <div class="portal-main">
+      <div id="navbar-container"></div>
+      <main class="portal-content profile-page">
+        <div class="page-header">
+          <div class="page-title-section">
+            <div class="page-title">
+              <h1>Profile</h1>
+              <p class="page-description">Basic account information and password change.</p>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-grid dashboard-grid-2">
+          <form class="card" id="profile-form">
+            <div class="card-header"><div class="card-title">Account Information</div></div>
+            <div class="form-group">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-input" id="name" name="name" type="text">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" id="email" name="email" type="email" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="role">Role</label>
+              <input class="form-input" id="role" name="role" type="text" disabled>
+            </div>
+            <button class="btn btn-primary" type="submit">Save Profile</button>
+            <p class="status-message" id="profile-message"></p>
+          </form>
+          <form class="card" id="password-form">
+            <div class="card-header"><div class="card-title">Change Password</div></div>
+            <div class="form-group">
+              <label class="form-label" for="password">New Password</label>
+              <input class="form-input" id="password" name="password" type="password" autocomplete="new-password" required>
+            </div>
+            <button class="btn btn-secondary" type="submit">Update Password</button>
+            <p class="status-message" id="password-message"></p>
+          </form>
+        </div>
+      </main>
+      <div id="footer-container"></div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="js/mvp.js"></script>
+  <script defer src="js/profile.js"></script>
+  <script defer src="js/components.js"></script>
 </body>
 </html>

@@ -89,9 +89,6 @@
             width: 22px;
             text-align: center;
         }
-        .sidebar .settings {
-            margin-top: auto;
-        }
         .main-content {
             margin-left: var(--sidebar-width);
             flex: 1;
@@ -200,11 +197,9 @@
         <nav>
             <ul>
                 <li><a href="dashboard.html"><span class="icon">&#x1F4C8;</span><span>Dashboard</span></a></li>
-                <li><a href="projects.html"><span class="icon">&#x1F4C4;</span><span>Projects</span></a></li>
-
                 <li><a class="active" href="files.html"><span class="icon">&#x1F4C1;</span><span>Files</span></a></li>
-                <li><a href="messages.html"><span class="icon">&#x2709;&#xFE0F;</span><span>Messages</span></a></li>
                 <li><a href="invoices.html"><span class="icon">&#x1F4B3;</span><span>Invoices</span></a></li>
+                <li><a href="revisions.html"><span class="icon">&#x1F504;</span><span>Revision Requests</span></a></li>
             </ul>
         </nav>
     </aside>
@@ -232,11 +227,14 @@
 
       <!-- Upload Panel -->
       <section class="upload-panel">
-        <div class="upload-drag" id="upload-drag">
-          Drag &amp; drop files here or click Upload
-        </div>
-        <button class="upload-btn" id="upload-btn">Upload</button>
-        <!-- TODO: Integrate Firebase Storage upload here -->
+        <form id="admin-upload-form">
+          <div class="upload-drag" id="upload-drag">Select a client project file to upload.</div>
+          <input type="text" class="search-input" id="upload-client-id" placeholder="Client ID" required style="margin-top:12px;">
+          <input type="text" class="search-input" id="upload-project" placeholder="Project" style="margin-top:12px;">
+          <input type="file" class="search-input" id="upload-file" required style="margin-top:12px;">
+          <button class="upload-btn" id="upload-btn" type="submit" style="margin-top:12px;">Upload</button>
+          <p id="upload-message"></p>
+        </form>
       </section>
 
       <!-- Files Table -->
@@ -261,10 +259,14 @@
           </tbody>
         </table>
         </div>
-        <!-- TODO: Replace with dynamic listing from Firebase Storage -->
       </section>
     </main>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
   <script src="js/files.js"></script>
 </body>
 </html>

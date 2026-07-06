@@ -21,8 +21,8 @@ async function loadFiles() {
     // Sort by uploaded date descending for recent uploads
     const recentUploadsElem = document.getElementById('recent-uploads');
     const recentFiles = [...allFiles].sort((a, b) => {
-      const dateA = a.uploaded ? new Date(a.uploaded) : new Date(0);
-      const dateB = b.uploaded ? new Date(b.uploaded) : new Date(0);
+      const dateA = normalizeDate(a.uploadedAt || a.uploaded);
+      const dateB = normalizeDate(b.uploadedAt || b.uploaded);
       return dateB - dateA;
     }).slice(0, 5);
     recentUploadsElem.innerHTML = '';
@@ -71,7 +71,7 @@ function renderTable(files) {
 
     // Client
     const clientTd = document.createElement('td');
-    clientTd.textContent = file.client || '-';
+    clientTd.textContent = file.client || file.clientName || file.clientId || '-';
     tr.appendChild(clientTd);
 
     // Project
@@ -86,8 +86,8 @@ function renderTable(files) {
 
     // Uploaded Date
     const uploadedTd = document.createElement('td');
-    if (file.uploaded) {
-      const date = new Date(file.uploaded);
+    if (file.uploadedAt || file.uploaded) {
+      const date = normalizeDate(file.uploadedAt || file.uploaded);
       uploadedTd.textContent = date.toLocaleString();
     } else {
       uploadedTd.textContent = '-';
@@ -100,14 +100,14 @@ function renderTable(files) {
     const downloadBtn = document.createElement('button');
     downloadBtn.textContent = 'Download';
     downloadBtn.type = 'button';
-    downloadBtn.onclick = () => window.downloadFile(file.name || '');
+    downloadBtn.onclick = () => window.downloadFile(file.id);
     downloadBtn.classList.add('btn', 'btn-sm', 'btn-primary', 'me-2');
     actionsTd.appendChild(downloadBtn);
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
     deleteBtn.type = 'button';
-    deleteBtn.onclick = () => window.deleteFile(file.name || '');
+    deleteBtn.onclick = () => window.deleteFile(file.id);
     deleteBtn.classList.add('btn', 'btn-sm', 'btn-danger');
     actionsTd.appendChild(deleteBtn);
 
@@ -126,19 +126,64 @@ function formatBytes(bytes) {
 }
 
 window.downloadFile = function(name) {
-  alert('Download for ' + name + ' will use Firebase Storage.');
-};
-
-window.deleteFile = function(name) {
-  if (confirm('Are you sure you want to delete "' + name + '"?')) {
-    alert('Delete for ' + name + ' will use Firebase Storage.');
+  const file = allFiles.find(item => item.id === name);
+  if (file?.url) {
+    window.open(file.url, '_blank', 'noopener');
   }
 };
+
+window.deleteFile = async function(name) {
+  const file = allFiles.find(item => item.id === name);
+  if (!file || !confirm('Delete "' + (file.name || 'this file') + '"?')) return;
+  if (file.storagePath && window.firebaseStorage) {
+    await window.firebaseStorage.ref(file.storagePath).delete().catch(() => {});
+  }
+  await window.firebaseDb.collection('files').doc(file.id).delete();
+  loadFiles();
+};
+
+function normalizeDate(value) {
+  if (!value) return new Date(0);
+  if (value.toDate) return value.toDate();
+  return new Date(value);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   loadFiles();
 
-  const searchInput = document.getElementById('searchInput');
+  const uploadForm = document.getElementById('admin-upload-form');
+  if (uploadForm) {
+    uploadForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const message = document.getElementById('upload-message');
+      const fileInput = document.getElementById('upload-file');
+      const clientId = document.getElementById('upload-client-id').value.trim();
+      const project = document.getElementById('upload-project').value.trim();
+      const file = fileInput.files[0];
+      if (!file || !clientId) return;
+
+      message.textContent = 'Uploading...';
+      const safeName = file.name.replace(/[^a-z0-9._-]/gi, '-').toLowerCase();
+      const ref = window.firebaseStorage.ref(`client-files/${clientId}/${Date.now()}-${safeName}`);
+      const snapshot = await ref.put(file);
+      const url = await snapshot.ref.getDownloadURL();
+      await window.firebaseDb.collection('files').add({
+        clientId,
+        project,
+        name: file.name,
+        sizeBytes: file.size,
+        contentType: file.type,
+        storagePath: snapshot.ref.fullPath,
+        url,
+        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      uploadForm.reset();
+      message.textContent = 'File uploaded.';
+      loadFiles();
+    });
+  }
+
+  const searchInput = document.getElementById('search-input');
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.trim().toLowerCase();
@@ -148,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const filtered = allFiles.filter(file => {
         const name = (file.name || '').toLowerCase();
-        const client = (file.client || '').toLowerCase();
+        const client = (file.client || file.clientName || file.clientId || '').toLowerCase();
         const project = (file.project || '').toLowerCase();
         return name.includes(query) || client.includes(query) || project.includes(query);
       });

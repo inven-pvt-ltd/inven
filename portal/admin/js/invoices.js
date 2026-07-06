@@ -66,9 +66,9 @@ function updateRevenueStats(invoices) {
             outstandingRevenue += amount;
         }
     }
-    document.getElementById('total-revenue').textContent = totalRevenue.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    document.getElementById('outstanding-revenue').textContent = outstandingRevenue.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    document.getElementById('paid-month').textContent = paidThisMonth.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    document.getElementById('total-revenue').textContent = totalRevenue.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
+    document.getElementById('outstanding-revenue').textContent = outstandingRevenue.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
+    document.getElementById('paid-month').textContent = paidThisMonth.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
 }
 
 function renderInvoices(invoices) {
@@ -88,17 +88,17 @@ function renderInvoices(invoices) {
     for (const inv of invoices) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${inv.id || ''}</td>
-            <td>${inv.client || ''}</td>
+            <td>${inv.invoiceNumber || inv.id || ''}</td>
+            <td>${inv.client || inv.clientName || inv.clientId || ''}</td>
             <td>${inv.project || ''}</td>
-            <td>${inv.amount ? Number(inv.amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : ''}</td>
+            <td>${inv.amount ? Number(inv.amount).toLocaleString('en-IN', { style: 'currency', currency: 'INR' }) : ''}</td>
             <td>${inv.status ? capitalize(inv.status) : ''}</td>
             <td>${inv.dueDate ? formatDate(inv.dueDate) : ''}</td>
             <td>
-                <button class="btn btn-sm btn-link" onclick="viewInvoice('${inv.id}')">View</button>
-                <button class="btn btn-sm btn-link" onclick="downloadInvoice('${inv.id}')">Download</button>
+                ${inv.pdfUrl ? `<a class="action-btn view" href="${inv.pdfUrl}" target="_blank" rel="noopener">View</a>` : ''}
+                ${inv.pdfUrl ? `<a class="action-btn download" href="${inv.pdfUrl}" download>Download</a>` : ''}
                 ${inv.status !== 'paid'
-                    ? `<button class="btn btn-sm btn-success" onclick="markInvoicePaid('${inv.id}')">Mark Paid</button>`
+                    ? `<button class="action-btn markpaid" onclick="markInvoicePaid('${inv.id}')">Mark Paid</button>`
                     : ''}
             </td>
         `;
@@ -146,17 +146,13 @@ function formatDate(d) {
     }
 }
 
-// Placeholder functions for invoice actions
-function viewInvoice(invoiceId) {
-    alert(`View Invoice: ${invoiceId}\n(Firebase integration placeholder)`);
-}
-
-function downloadInvoice(invoiceId) {
-    alert(`Download Invoice: ${invoiceId}\n(Firebase integration placeholder)`);
-}
-
-function markInvoicePaid(invoiceId) {
-    alert(`Mark Invoice Paid: ${invoiceId}\n(Firebase integration placeholder)`);
+async function markInvoicePaid(invoiceId) {
+    await window.firebaseDb.collection('invoices').doc(invoiceId).set({
+        status: 'paid',
+        paidAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+    loadInvoices();
 }
 
 document.addEventListener('DOMContentLoaded', loadInvoices);

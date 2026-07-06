@@ -103,9 +103,6 @@
             width: 22px;
             text-align: center;
         }
-        .sidebar .settings {
-            margin-top: auto;
-        }
     .main-content {
       margin-left: 230px;
       flex: 1;
@@ -378,10 +375,9 @@
             <ul>
                 <li><a href="dashboard.html"><span class="icon">&#x1F4C8;</span><span>Dashboard</span></a></li>
 
-                <li><a href="projects.html"><span class="icon">&#x1F4C4;</span><span>Projects</span></a></li>
                 <li><a href="files.html"><span class="icon">&#x1F4C1;</span><span>Files</span></a></li>
-                <li><a href="messages.html"><span class="icon">&#x2709;&#xFE0F;</span><span>Messages</span></a></li>
                 <li><a class="active" href="invoices.html"><span class="icon">&#x1F4B3;</span><span>Invoices</span></a></li>
+                <li><a href="revisions.html"><span class="icon">&#x1F504;</span><span>Revision Requests</span></a></li>
             </ul>
         </nav>
     </aside>
@@ -432,6 +428,11 @@
       </table>
     </div>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
   <script src="js/invoices.js"></script>
 </body>
 </html>
